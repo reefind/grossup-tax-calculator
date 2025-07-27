@@ -1,0 +1,261 @@
+/* style.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); /* Changed font to Inter, as it's closer to the image */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F0F2F5; /* Lighter, more neutral background similar to the image */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    color: #333333; /* Darker text for better readability */
+    line-height: 1.6; /* Adjusted line-height */
+}
+
+.container {
+    background-color: #FFFFFF; /* White background for the container */
+    padding: 30px; /* Adjusted padding */
+    border-radius: 8px; /* Slightly less rounded corners to match image */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Softer, more subtle shadow */
+    width: 100%;
+    max-width: 950px; /* Increased max-width for a wider layout, similar to image */
+    box-sizing: border-box;
+    margin-bottom: 30px;
+}
+
+h1 {
+    text-align: center;
+    color: #333333; /* Darker heading color */
+    margin-bottom: 30px;
+    font-size: 28px; /* Adjusted heading size */
+    font-weight: 600; /* Adjusted font weight */
+    border-bottom: 1px solid #E0E0E0; /* Lighter border color */
+    padding-bottom: 15px;
+    letter-spacing: 0.2px; /* Reduced letter spacing */
+}
+
+.section {
+    border: 1px solid #E0E0E0; /* Consistent border color */
+    padding: 18px; /* Adjusted padding */
+    border-radius: 6px; /* Less rounded corners for sections */
+    margin-top: 20px; /* Adjusted margin */
+    background-color: #FFFFFF; /* White background for sections */
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px; /* Adjusted margin */
+    border-bottom: 1px solid #E0E0E0; /* Consistent border color */
+    padding-bottom: 10px;
+}
+
+.section-header h2 {
+    color: #333333; /* Darker section heading color */
+    margin: 0;
+    font-size: 22px; /* Adjusted section heading size */
+    font-weight: 600;
+    letter-spacing: 0.1px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #555555; /* Slightly lighter label color */
+    font-size: 15px; /* Adjusted font size */
+}
+
+.input-group input[type="number"],
+.input-group select {
+    width: 100%;
+    padding: 12px; /* Adjusted padding */
+    border: 1px solid #CCCCCC; /* Neutral border color */
+    border-radius: 6px; /* Less rounded corners */
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #FFFFFF; /* White background for inputs */
+}
+
+.input-group input[type="number"]:focus,
+.input-group select:focus {
+    border-color: #66AFE9; /* Standard blue on focus */
+    box-shadow: 0 0 0 3px rgba(102, 175, 233, 0.6); /* Standard blue shadow on focus */
+    outline: none;
+}
+
+button {
+    background-color: #007BFF; /* Standard blue for buttons */
+    color: white;
+    padding: 12px 25px; /* Adjusted padding */
+    border: none;
+    border-radius: 6px; /* Less rounded corners */
+    font-size: 16px; /* Adjusted font size */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    width: auto;
+    display: block;
+    margin-top: 18px; /* Adjusted margin */
+    margin-bottom: 30px; /* Adjusted margin */
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2); /* Subtle shadow */
+}
+
+button:hover {
+    background-color: #0056B3; /* Darker blue on hover */
+    transform: translateY(-1px); /* Subtle lift effect */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
+}
+
+.result-group {
+    margin-top: 18px;
+    padding: 15px; /* Adjusted padding */
+    background-color: #F8F9FA; /* Light gray background for results */
+    border: 1px solid #E0E0E0; /* Consistent border color */
+    border-radius: 6px; /* Less rounded corners */
+}
+
+.result-group p {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #333333;
+}
+
+.result-group span {
+    font-weight: 700;
+    color: #007BFF; /* Standard blue for values */
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    accent-color: #007BFF; /* Standard blue for checkbox */
+    border-radius: 3px; /* Slightly less rounded checkbox */
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: 500;
+    color: #333333;
+    font-size: 15px;
+}
+
+.total-section {
+    margin-top: 35px;
+    padding: 25px;
+    background-color: #EBF5FF; /* Light blue background for total section */
+    border: 1px solid #A7D9FF; /* Softer blue border */
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1); /* Subtle shadow */
+}
+.total-section h2 {
+    color: #007BFF; /* Standard blue for total heading */
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 18px;
+    letter-spacing: 0.2px;
+}
+.total-section p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    margin: 10px 0;
+}
+.total-section span {
+    color: #007BFF; /* Standard blue for values */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        max-width: 95%;
+        padding: 15px;
+    }
+    h1 {
+        font-size: 26px;
+        margin-bottom: 25px;
+    }
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+    }
+    .section-header h2 {
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+    .checkbox-group {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    .input-group input[type="number"],
+    .input-group select,
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .result-group p {
+        font-size: 15px;
+    }
+    .total-section h2 {
+        font-size: 24px;
+    }
+    .total-section p {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        padding: 10px;
+    }
+    h1 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    .section-header h2 {
+        font-size: 18px;
+    }
+    .input-group input[type="number"],
+    .input-group select,
+    button {
+        font-size: 13px;
+        padding: 8px;
+    }
+    .result-group p {
+        font-size: 13px;
+    }
+    .total-section h2 {
+        font-size: 20px;
+    }
+    .total-section p {
+        font-size: 16px;
+    }
+}
