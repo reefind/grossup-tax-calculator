@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const tarifPPNSelect = document.getElementById('tarifPPN');
     const hitungPPNButton = document.getElementById('hitungPPNButton');
 
-    // New PPN applicable checkbox
+    // PPN applicable checkbox
     const ppnApplicableCheckbox = document.getElementById('ppnApplicable');
 
     const hargaJualSebelumPPNSpan = document.getElementById('hargaJualSebelumPPN');
@@ -197,18 +197,32 @@ document.addEventListener('DOMContentLoaded', function() {
     // and you can type numbers directly. The display of results will still be formatted.
     uangMasukRekeningInput.addEventListener('input', calculateAll); // Only trigger calculation on input
 
+    // Get all PPh applicable checkboxes
+    const pphCheckboxes = [pph21ApplicableCheckbox, pph23ApplicableCheckbox, pph42ApplicableCheckbox];
+
+    // Add event listeners to PPh checkboxes for exclusive selection
+    pphCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                // If this checkbox is checked, uncheck all others
+                pphCheckboxes.forEach(otherCheckbox => {
+                    if (otherCheckbox !== this) {
+                        otherCheckbox.checked = false;
+                    }
+                });
+            }
+            calculateAll(); // Recalculate after change
+        });
+    });
+
+
     // Add other event listeners
     tarifPPNSelect.addEventListener('change', calculateAll);
     hitungPPNButton.addEventListener('click', calculateAll);
 
     ppnApplicableCheckbox.addEventListener('change', calculateAll);
-    pph21ApplicableCheckbox.addEventListener('change', calculateAll);
     tarifPPh21Select.addEventListener('change', calculateAll);
-
-    pph23ApplicableCheckbox.addEventListener('change', calculateAll);
     tarifPPh23Select.addEventListener('change', calculateAll);
-
-    pph42ApplicableCheckbox.addEventListener('change', calculateAll);
     tarifPPh42Select.addEventListener('change', calculateAll);
 
     // Initial calculation on page load
