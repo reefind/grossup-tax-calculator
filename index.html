@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Pajak Untuk Gross Up PPN dan PPH</title> <!-- Changed title here -->
+    <title>Kalkulator Pajak Untuk Gross Up PPN dan PPH</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Sedikit tambahan styling untuk select box */
+        /* Styling untuk select box, bisa dipindahkan ke style.css jika diinginkan */
         .input-group select {
-            width: calc(100% - 20px); /* Sesuaikan dengan input type="number" */
+            width: calc(100% - 20px);
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
-            background-color: white; /* Pastikan background putih */
+            background-color: white;
         }
 
-        /* Styling untuk setiap section pajak */
+        /* Styling dasar untuk section, bisa disesuaikan lebih lanjut di style.css */
         .section {
             border: 1px solid #e0e0e0;
             padding: 20px;
@@ -38,22 +38,22 @@
             display: flex;
             align-items: center;
             margin-bottom: 15px;
-            justify-content: flex-start; /* Rata kiri */
+            justify-content: flex-start;
         }
 
         .checkbox-group input[type="checkbox"] {
             margin-right: 10px;
-            width: 20px; /* Ukuran checkbox */
+            width: 20px;
             height: 20px;
         }
 
         .checkbox-group label {
-            margin-bottom: 0; /* Hapus margin bawah default label */
-            font-weight: normal; /* Kembalikan ke normal, tidak bold */
+            margin-bottom: 0;
+            font-weight: normal;
             color: #333;
         }
 
-        /* Untuk total akhir */
+        /* Styling untuk bagian ringkasan akhir */
         .total-section {
             margin-top: 40px;
             padding: 25px;
@@ -80,9 +80,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Kalkulator Pajak Untuk Gross Up PPN dan PPH</h1> <!-- Changed heading here -->
+        <h1>Kalkulator Pajak Untuk Gross Up PPN dan PPH</h1>
 
-        <!-- Moved "Uang yang diharapkan masuk ke Rekening Bank" to the top section -->
         <div class="section">
             <h2>Informasi Dasar</h2>
             <div class="input-group">
@@ -110,8 +109,8 @@
                 </select>
             </div>
             <div class="result-group">
-                <p>Harga Jual: Rp <span id="hargaJualSebelumPPN">0</span></p>
-                <p>PPN: Rp <span id="besarPPN">0</span></p>
+                <p>Harga Jual: <span id="hargaJualSebelumPPN">0</span></p>
+                <p>PPN: <span id="besarPPN">0</span></p>
             </div>
         </div>
 
@@ -119,7 +118,7 @@
             <div class="section-header">
                 <h2>PPh 21</h2>
                 <div class="input-group checkbox-group">
-                    <input type="checkbox" id="pph21Applicable"> <!-- 'checked' attribute removed -->
+                    <input type="checkbox" id="pph21Applicable">
                     <label for="pph21Applicable">Applicable</label>
                 </div>
             </div>
@@ -128,12 +127,11 @@
                 <select id="tarifPPh21">
                     <option value="2.5" selected>5% x 50% (2.5%)</option>
                     <option value="5">5%</option>
-                    <!-- Opsi 15%, 25%, 30% telah dihapus dari sini -->
                 </select>
             </div>
             <div class="result-group">
-                <p>Dasar Pengenaan Pajak (PPh 21): Rp <span id="dppPPh21">0</span></p>
-                <p>Besar PPh 21: Rp <span id="besarPPh21">0</span></p>
+                <p>Dasar Pengenaan Pajak (PPh 21): <span id="dppPPh21">0</span></p>
+                <p>Besar PPh 21: <span id="besarPPh21">0</span></p>
             </div>
         </div>
 
@@ -141,7 +139,7 @@
             <div class="section-header">
                 <h2>PPh 23</h2>
                 <div class="input-group checkbox-group">
-                    <input type="checkbox" id="pph23Applicable"> <!-- 'checked' attribute removed -->
+                    <input type="checkbox" id="pph23Applicable">
                     <label for="pph23Applicable">Applicable</label>
                 </div>
             </div>
@@ -153,8 +151,8 @@
                 </select>
             </div>
             <div class="result-group">
-                <p>Dasar Pengenaan Pajak (PPh 23): Rp <span id="dppPPh23">0</span></p>
-                <p>Besar PPh 23: Rp <span id="besarPPh23">0</span></p>
+                <p>Dasar Pengenaan Pajak (PPh 23): <span id="dppPPh23">0</span></p>
+                <p>Besar PPh 23: <span id="besarPPh23">0</span></p>
             </div>
         </div>
 
@@ -162,7 +160,7 @@
             <div class="section-header">
                 <h2>PPh 4(2)</h2>
                 <div class="input-group checkbox-group">
-                    <input type="checkbox" id="pph42Applicable"> <!-- 'checked' attribute removed -->
+                    <input type="checkbox" id="pph42Applicable">
                     <label for="pph42Applicable">Applicable</label>
                 </div>
             </div>
@@ -178,17 +176,17 @@
                 </select>
             </div>
             <div class="result-group">
-                <p>Dasar Pengenaan Pajak (PPh 4(2)): Rp <span id="dppPPh42">0</span></p>
-                <p>Besar PPh 4(2): Rp <span id="besarPPh42">0</span></p>
+                <p>Dasar Pengenaan Pajak (PPh 4(2)): <span id="dppPPh42">0</span></p>
+                <p>Besar PPh 4(2): <span id="besarPPh42">0</span></p>
             </div>
         </div>
 
         <div class="total-section">
             <h2>Ringkasan</h2>
-            <p>Harga Jual: Rp <span id="summaryHargaJual">0</span></p>
-            <p>Penambahan PPN: Rp <span id="summaryBesarPPN">0</span></p>
-            <p>Pengurangan PPH: Rp <span id="totalPPhDipotong">0</span></p>
-            <p>Uang Diterima: Rp <span id="uangDiterima">0</span></p>
+            <p>Harga Jual: <span id="summaryHargaJual">0</span></p>
+            <p>Penambahan PPN: <span id="summaryBesarPPN">0</span></p>
+            <p>Pengurangan PPH: <span id="totalPPhDipotong">0</span></p>
+            <p>Uang Diterima: <span id="uangDiterima">0</span></p>
         </div>
 
     </div>

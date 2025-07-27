@@ -1,231 +1,283 @@
 /* style.css */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); /* Changed font to Inter, as it's closer to the image */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); /* Menggunakan Inter untuk keterbacaan yang lebih baik */
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #F0F2F5; /* Lighter, more neutral background similar to the image */
+    font-family: 'Inter', sans-serif; /* Font yang bersih dan modern */
+    background-color: #F0F2F5; /* Latar belakang abu-abu terang yang lembut */
     margin: 0;
-    padding: 20px;
+    padding: 20px; /* Padding yang wajar */
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    color: #333333; /* Darker text for better readability */
-    line-height: 1.6; /* Adjusted line-height */
+    color: #333333; /* Warna teks gelap untuk kontras tinggi */
+    line-height: 1.5; /* Kerapatan baris yang nyaman untuk dibaca */
+    overflow-x: hidden; /* Mencegah scroll horizontal */
 }
 
 .container {
-    background-color: #FFFFFF; /* White background for the container */
-    padding: 30px; /* Adjusted padding */
-    border-radius: 8px; /* Slightly less rounded corners to match image */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Softer, more subtle shadow */
+    background-color: #FFFFFF; /* Latar belakang putih bersih */
+    padding: 30px; /* Padding yang cukup di dalam kotak utama */
+    border-radius: 10px; /* Sudut membulat yang moderat */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Bayangan lembut dan tidak berlebihan */
     width: 100%;
-    max-width: 950px; /* Increased max-width for a wider layout, similar to image */
+    max-width: 800px; /* Lebar maksimum yang lebih fokus */
     box-sizing: border-box;
     margin-bottom: 30px;
+    border: 1px solid #E0E0E0; /* Border tipis dan bersih */
+    animation: none; /* Menghapus animasi fadeIn */
 }
 
 h1 {
+    font-family: 'Inter', sans-serif; /* Menggunakan font Inter untuk konsistensi */
     text-align: center;
-    color: #333333; /* Darker heading color */
-    margin-bottom: 30px;
-    font-size: 28px; /* Adjusted heading size */
-    font-weight: 600; /* Adjusted font weight */
-    border-bottom: 1px solid #E0E0E0; /* Lighter border color */
+    color: #2C3E50; /* Warna judul yang kuat namun profesional */
+    margin-bottom: 30px; /* Jarak yang cukup di bawah judul */
+    font-size: 30px; /* Ukuran judul yang jelas */
+    font-weight: 700; /* Tebal dan mudah dibaca */
+    text-shadow: none; /* Menghapus efek glow */
+    border-bottom: 2px solid #E0E0E0; /* Border bawah yang bersih */
     padding-bottom: 15px;
-    letter-spacing: 0.2px; /* Reduced letter spacing */
+    letter-spacing: 0.5px; /* Spasi huruf yang nyaman */
+    animation: none; /* Menghapus animasi pulse */
 }
 
 .section {
-    border: 1px solid #E0E0E0; /* Consistent border color */
-    padding: 18px; /* Adjusted padding */
-    border-radius: 6px; /* Less rounded corners for sections */
-    margin-top: 20px; /* Adjusted margin */
-    background-color: #FFFFFF; /* White background for sections */
+    border: 1px solid #E0E0E0; /* Border yang bersih */
+    padding: 20px; /* Padding yang lebih ringkas di dalam setiap bagian */
+    border-radius: 8px; /* Sudut membulat yang konsisten */
+    margin-top: 25px; /* Jarak antar bagian yang wajar */
+    background-color: #FDFDFD; /* Latar belakang bagian yang sangat terang */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Bayangan yang sangat halus */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transisi yang lebih halus */
+}
+
+.section:hover {
+    transform: translateY(-2px); /* Efek angkat yang lebih subtle */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Bayangan sedikit lebih jelas saat hover */
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px; /* Adjusted margin */
-    border-bottom: 1px solid #E0E0E0; /* Consistent border color */
+    margin-bottom: 15px; /* Jarak yang lebih ringkas */
+    border-bottom: 1px solid #E0E0E0; /* Border bawah yang bersih */
     padding-bottom: 10px;
+    text-shadow: none; /* Menghapus efek glow */
 }
 
 .section-header h2 {
-    color: #333333; /* Darker section heading color */
+    color: #2C3E50; /* Warna judul bagian yang kuat */
     margin: 0;
-    font-size: 22px; /* Adjusted section heading size */
+    font-size: 22px; /* Ukuran judul bagian yang jelas */
     font-weight: 600;
-    letter-spacing: 0.1px;
+    letter-spacing: 0.2px;
 }
 
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 15px; /* Jarak antar grup input yang lebih ringkas */
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px; /* Jarak label dengan input */
     font-weight: 500;
-    color: #555555; /* Slightly lighter label color */
-    font-size: 15px; /* Adjusted font size */
+    color: #555555; /* Warna label yang mudah dibaca */
+    font-size: 16px;
 }
 
-.input-group input[type="number"],
+.input-group input[type="text"],
 .input-group select {
     width: 100%;
-    padding: 12px; /* Adjusted padding */
-    border: 1px solid #CCCCCC; /* Neutral border color */
-    border-radius: 6px; /* Less rounded corners */
-    font-size: 15px;
+    padding: 12px; /* Padding input yang nyaman */
+    border: 1px solid #CCCCCC; /* Border input yang netral */
+    border-radius: 6px; /* Sudut membulat yang moderat */
+    font-size: 16px; /* Ukuran font input yang standar */
     box-sizing: border-box;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: #FFFFFF; /* White background for inputs */
+    background-color: #FFFFFF; /* Latar belakang input putih */
+    color: #333333; /* Warna teks input gelap */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08); /* Bayangan inset yang halus */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.input-group input[type="number"]:focus,
+.input-group input[type="text"]:focus,
 .input-group select:focus {
-    border-color: #66AFE9; /* Standard blue on focus */
-    box-shadow: 0 0 0 3px rgba(102, 175, 233, 0.6); /* Standard blue shadow on focus */
+    border-color: #007BFF; /* Border biru standar saat fokus */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Glow biru standar saat fokus */
+    background-color: #FFFFFF; /* Tetap putih saat fokus */
     outline: none;
 }
 
 button {
-    background-color: #007BFF; /* Standard blue for buttons */
-    color: white;
-    padding: 12px 25px; /* Adjusted padding */
+    background: #007BFF; /* Warna biru standar untuk tombol */
+    color: white; /* Teks putih */
     border: none;
-    border-radius: 6px; /* Less rounded corners */
-    font-size: 16px; /* Adjusted font size */
-    font-weight: 600;
+    padding: 12px 25px; /* Padding tombol yang nyaman */
+    border-radius: 6px; /* Sudut membulat yang konsisten */
+    font-size: 18px; /* Ukuran font tombol yang jelas */
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    width: auto;
-    display: block;
-    margin-top: 18px; /* Adjusted margin */
-    margin-bottom: 30px; /* Adjusted margin */
-    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2); /* Subtle shadow */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: auto; /* Lebar otomatis */
+    display: block; /* Menjadi blok agar bisa di-margin auto */
+    margin: 25px auto 0 auto; /* Tengah dan ada jarak atas */
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 button:hover {
-    background-color: #0056B3; /* Darker blue on hover */
-    transform: translateY(-1px); /* Subtle lift effect */
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-}
-
-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
+    background-color: #0056b3; /* Warna biru lebih gelap saat hover */
+    transform: translateY(-2px); /* Efek angkat kecil saat hover */
 }
 
 .result-group {
-    margin-top: 18px;
-    padding: 15px; /* Adjusted padding */
-    background-color: #F8F9FA; /* Light gray background for results */
-    border: 1px solid #E0E0E0; /* Consistent border color */
-    border-radius: 6px; /* Less rounded corners */
+    background-color: #E8F0F7; /* Latar belakang hasil yang lebih terang */
+    border: 1px solid #C9D9E9; /* Border hasil yang serasi */
+    border-radius: 6px;
+    padding: 15px; /* Padding yang nyaman */
+    margin-top: 20px;
 }
 
 .result-group p {
-    margin: 8px 0;
-    font-size: 16px;
-    color: #333333;
+    margin: 8px 0; /* Jarak antar paragraf hasil yang ringkas */
+    font-size: 17px; /* Ukuran font hasil yang jelas */
+    color: #444444; /* Warna teks hasil yang mudah dibaca */
+    display: flex;
+    justify-content: space-between; /* Untuk menyejajarkan teks dan nilai */
+    align-items: center;
 }
 
-.result-group span {
-    font-weight: 700;
-    color: #007BFF; /* Standard blue for values */
+.result-group p span {
+    font-weight: 600;
+    color: #0056b3; /* Warna nilai hasil yang menonjol */
+    font-size: 18px;
+    text-align: right; /* Pastikan nilai angka rata kanan */
+    flex-grow: 1; /* Memungkinkan span untuk mengambil ruang yang tersedia */
 }
 
+/* Checkbox styling */
 .checkbox-group {
     display: flex;
     align-items: center;
-    margin-bottom: 0;
+    justify-content: flex-end; /* Pindahkan checkbox ke kanan */
+    margin-bottom: 0; /* Hapus margin bawah karena sudah di dalam section-header */
 }
 
 .checkbox-group input[type="checkbox"] {
-    margin-right: 8px;
-    width: 18px;
-    height: 18px;
-    accent-color: #007BFF; /* Standard blue for checkbox */
-    border-radius: 3px; /* Slightly less rounded checkbox */
+    appearance: none; /* Hapus tampilan default */
+    width: 20px;
+    height: 20px;
+    border: 2px solid #007BFF;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.checkbox-group input[type="checkbox"]:checked {
+    background-color: #007BFF;
+    border-color: #007BFF;
+}
+
+.checkbox-group input[type="checkbox"]:checked::after {
+    content: '✔'; /* Tanda centang */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    line-height: 1;
 }
 
 .checkbox-group label {
-    margin-bottom: 0;
-    font-weight: 500;
-    color: #333333;
-    font-size: 15px;
+    margin-left: 10px;
+    margin-bottom: 0; /* Pastikan tidak ada margin bawah tambahan */
+    font-weight: normal;
+    color: #333;
+    cursor: pointer;
 }
 
+/* Total Section (Summary) */
 .total-section {
-    margin-top: 35px;
-    padding: 25px;
-    background-color: #EBF5FF; /* Light blue background for total section */
-    border: 1px solid #A7D9FF; /* Softer blue border */
-    border-radius: 8px;
+    margin-top: 40px;
+    padding: 30px; /* Padding lebih besar untuk menarik perhatian */
+    background-color: #E6F7FF; /* Latar belakang biru muda yang cerah */
+    border: 2px solid #007BFF; /* Border biru yang kuat */
+    border-radius: 10px; /* Sudut membulat yang lebih besar */
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1); /* Subtle shadow */
-}
-.total-section h2 {
-    color: #007BFF; /* Standard blue for total heading */
-    font-size: 26px;
-    font-weight: 700;
-    margin-top: 0;
-    margin-bottom: 18px;
-    letter-spacing: 0.2px;
-}
-.total-section p {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333333;
-    margin: 10px 0;
-}
-.total-section span {
-    color: #007BFF; /* Standard blue for values */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Bayangan yang lebih menonjol */
+    animation: fadeInScale 0.5s ease-out; /* Animasi muncul yang halus */
 }
 
-/* Responsive adjustments */
+.total-section h2 {
+    color: #007BFF; /* Warna judul ringkasan yang menonjol */
+    font-size: 28px; /* Ukuran judul ringkasan yang lebih besar */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 700;
+    border-bottom: 2px solid #B3E0FF; /* Border bawah yang lebih tebal */
+    padding-bottom: 10px;
+}
+
+.total-section p {
+    font-size: 20px; /* Ukuran font paragraf ringkasan */
+    font-weight: 500;
+    color: #333;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-section p span {
+    font-size: 26px; /* Ukuran font nilai akhir yang sangat menonjol */
+    font-weight: 700;
+    color: #0056b3;
+    text-align: right;
+    flex-grow: 1;
+}
+
+/* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     .container {
-        max-width: 95%;
-        padding: 15px;
+        padding: 20px;
+        margin: 15px;
     }
+
     h1 {
         font-size: 26px;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 8px;
-        padding-bottom: 6px;
+
+    .section {
+        padding: 15px;
+        margin-top: 20px;
     }
+
     .section-header h2 {
         font-size: 20px;
-        margin-bottom: 6px;
     }
-    .checkbox-group {
-        width: 100%;
-        justify-content: flex-start;
-    }
-    .input-group input[type="number"],
+
+    .input-group label,
+    .input-group input,
     .input-group select,
-    button {
-        font-size: 14px;
-        padding: 10px;
-    }
-    .result-group p {
+    .result-group p,
+    .total-section p {
         font-size: 15px;
     }
-    .total-section h2 {
-        font-size: 24px;
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
     }
-    .total-section p {
-        font-size: 18px;
+
+    .result-group p span,
+    .total-section p span {
+        font-size: 20px;
     }
 }
 
@@ -234,28 +286,22 @@ button:active {
         padding: 10px;
     }
     .container {
-        padding: 10px;
+        padding: 15px;
+        margin: 10px;
     }
     h1 {
-        font-size: 22px;
-        margin-bottom: 20px;
+        font-size: 24px;
+        margin-bottom: 15px;
     }
-    .section-header h2 {
-        font-size: 18px;
+    .section-header {
+        flex-direction: column; /* Stack header and checkbox on small screens */
+        align-items: flex-start;
     }
-    .input-group input[type="number"],
-    .input-group select,
+    .checkbox-group {
+        margin-top: 10px;
+        justify-content: flex-start; /* Align checkbox to left on small screens */
+    }
     button {
-        font-size: 13px;
-        padding: 8px;
-    }
-    .result-group p {
-        font-size: 13px;
-    }
-    .total-section h2 {
-        font-size: 20px;
-    }
-    .total-section p {
-        font-size: 16px;
+        width: 100%; /* Full width button on very small screens */
     }
 }
