@@ -76,6 +76,23 @@
         .total-section span {
             color: #0056b3;
         }
+
+        /* Styling untuk teks profil di bawah ringkasan */
+        .profile-link-below-summary {
+            text-align: center; /* Pusatkan teks */
+            margin-top: 20px; /* Jarak dari ringkasan di atasnya */
+            font-size: 0.9em; /* Ukuran font lebih kecil */
+            color: #555; /* Warna teks yang sedikit pudar */
+        }
+
+        .profile-link-below-summary a {
+            color: #007bff; /* Warna link */
+            text-decoration: none; /* Hilangkan garis bawah default */
+        }
+
+        .profile-link-below-summary a:hover {
+            text-decoration: underline; /* Munculkan garis bawah saat di-hover */
+        }
     </style>
 </head>
 <body>
@@ -187,6 +204,10 @@
             <p>Penambahan PPN: <span id="summaryBesarPPN">0</span></p>
             <p>Pengurangan PPH: <span id="totalPPhDipotong">0</span></p>
             <p>Uang Diterima: <span id="uangDiterima">0</span></p>
+        </div>
+
+        <div class="profile-link-below-summary">
+            <p>Dibuat oleh: <a href="https://www.linkedin.com/in/arief-indrawan" target="_blank">Arief Indrawan</a></p>
         </div>
 
     </div>
