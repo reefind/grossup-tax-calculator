@@ -7,29 +7,37 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* Pastikan style.css Anda ada dan berisi styling dasar */
-        /* Anda juga bisa memindahkan style yang ada di <head> ini ke style.css */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
         .container {
-            display: flex; /* Menggunakan flexbox untuk layout kolom */
-            justify-content: space-around;
-            flex-wrap: wrap; /* Agar kolom bisa wrap di layar kecil */
-            gap: 20px; /* Jarak antar kolom */
+            display: flex;
+            justify-content: center; /* Pusatkan kolom di tengah */
+            flex-wrap: wrap;
+            gap: 20px;
             padding: 20px;
         }
         .column {
-            flex: 1; /* Kolom akan mengambil ruang yang tersedia secara merata */
-            min-width: 300px; /* Lebar minimum untuk setiap kolom */
+            flex: 1;
+            min-width: 300px;
+            max-width: 450px; /* Batasi lebar maksimum kolom agar tidak terlalu lebar */
             border: 1px solid #e0e0e0;
             padding: 20px;
             border-radius: 8px;
             background-color: #fcfcfc;
-            margin-bottom: 20px; /* Tambahkan margin bawah untuk setiap kolom */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
         .section-header h2 {
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-        /* Tambahkan atau sesuaikan styling lainnya dari file Anda yang ada */
         .input-group select {
             width: calc(100% - 20px);
             padding: 10px;
@@ -77,11 +85,16 @@
 
         .result-group p {
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
         }
         .result-group span {
-            color: green; /* Warna hijau untuk hasil */
+            color: green;
+            text-align: right;
         }
-        
+
         .total-section {
             margin-top: 40px;
             padding: 25px;
@@ -97,17 +110,23 @@
             margin-bottom: 15px;
         }
         .total-section p {
-            font-size: 24px;
+            font-size: 20px; /* Sedikit lebih kecil agar tidak terlalu besar */
             font-weight: bold;
             color: #333;
+            display: flex; /* Untuk memisahkan label dan nilai */
+            justify-content: space-between; /* Untuk meratakan kiri dan kanan */
+            align-items: baseline;
+            margin-bottom: 10px;
+            padding: 0 10px; /* Memberi sedikit padding horizontal */
         }
         .total-section span {
             color: #0056b3;
+            text-align: right;
         }
 
         .profile-link-below-summary {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 30px;
             font-size: 0.9em;
             color: #555;
         }
@@ -121,10 +140,69 @@
             text-decoration: underline;
         }
 
+        /* Styling untuk video header */
+        .video-header {
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 30px;
+            position: sticky;
+            top: 0;
+            background-color: #f4f4f4;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .video-header video {
+            max-width: 100%;
+            height: 3cm;
+            object-fit: cover;
+        }
+
+        /* Styling untuk Selisih Hasil di bawah kolom */
+        .difference-section {
+            width: fit-content; /* Sesuaikan lebar dengan konten */
+            margin: 40px auto; /* Pusatkan secara horizontal */
+            padding: 25px;
+            background-color: #fff3e0; /* Warna latar belakang yang berbeda */
+            border: 2px solid #ff9800; /* Border warna oranye */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 600px; /* Batasi lebar maksimum agar tidak terlalu lebar di layar besar */
+            text-align: left; /* Rata kiri untuk teks di dalam */
+        }
+
+        .difference-section h2 {
+            color: #ff9800;
+            font-size: 26px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center; /* Judul tetap di tengah */
+            border-bottom: 1px solid #ffe0b2;
+            padding-bottom: 10px;
+        }
+
+        .difference-section .result-group p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .difference-section .result-group span {
+            color: #e65100; /* Warna oranye gelap untuk hasil */
+            text-align: right;
+        }
     </style>
 </head>
 <body>
-    <h1>Kalkulator Pajak Untuk Gross Up PPN dan PPH</h1>
+    <div class="video-header">
+        <video autoplay loop muted>
+            <source src="Header Kalkulator.mp4" type="video/mp4">
+            Browser Anda tidak mendukung tag video.
+        </video>
+    </div>
 
     <div class="container">
         <div class="column">
@@ -136,7 +214,7 @@
                     <label for="uangMasukRekening_col1">Uang yang diharapkan masuk ke Rekening Bank:</label>
                     <input type="text" id="uangMasukRekening_col1" placeholder="Contoh: 10000000">
                 </div>
-                </div>
+            </div>
 
             <div class="section">
                 <div class="section-header">
@@ -246,7 +324,7 @@
                     <label for="hargaJual_col2">Harga Jual yang disepakati:</label>
                     <input type="text" id="hargaJual_col2" placeholder="Contoh: 10000000">
                 </div>
-                </div>
+            </div>
 
             <div class="section">
                 <div class="section-header">
@@ -346,17 +424,15 @@
                 <p>Uang Diterima: <span id="uangDiterima_col2">0</span></p>
             </div>
         </div>
+    </div>
 
-        <div class="column">
-            <h2>Selisih Hasil</h2>
-            <div class="section">
-                <div class="result-group">
-                    <p>Selisih Harga Jual: <span id="diffHargaJual">0</span></p>
-                    <p>Selisih PPN: <span id="diffBesarPPN">0</span></p>
-                    <p>Selisih PPH: <span id="diffTotalPPH">0</span></p>
-                    <p>Selisih Uang Diterima: <span id="diffUangDiterima">0</span></p>
-                </div>
-            </div>
+    <div class="difference-section">
+        <h2>Selisih Hasil</h2>
+        <div class="result-group">
+            <p>Selisih Harga Jual: <span id="diffHargaJual">0</span></p>
+            <p>Selisih PPN: <span id="diffBesarPPN">0</span></p>
+            <p>Selisih PPH: <span id="diffTotalPPH">0</span></p>
+            <p>Selisih Uang Diterima: <span id="diffUangDiterima">0</span></p>
         </div>
     </div>
 
