@@ -1,307 +1,208 @@
-/* style.css */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); /* Menggunakan Inter untuk keterbacaan yang lebih baik */
-
 body {
-    font-family: 'Inter', sans-serif; /* Font yang bersih dan modern */
-    background-color: #F0F2F5; /* Latar belakang abu-abu terang yang lembut */
+    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px; /* Padding yang wajar */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    color: #333333; /* Warna teks gelap untuk kontras tinggi */
-    line-height: 1.5; /* Kerapatan baris yang nyaman untuk dibaca */
-    overflow-x: hidden; /* Mencegah scroll horizontal */
-}
-
-.container {
-    background-color: #FFFFFF; /* Latar belakang putih bersih */
-    padding: 30px; /* Padding yang cukup di dalam kotak utama */
-    border-radius: 10px; /* Sudut membulat yang moderat */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Bayangan lembut dan tidak berlebihan */
-    width: 100%;
-    max-width: 800px; /* Lebar maksimum yang lebih fokus */
-    box-sizing: border-box;
-    margin-bottom: 30px;
-    border: 1px solid #E0E0E0; /* Border tipis dan bersih */
-    animation: none; /* Menghapus animasi fadeIn */
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
 h1 {
-    font-family: 'Inter', sans-serif; /* Menggunakan font Inter untuk konsistensi */
     text-align: center;
-    color: #2C3E50; /* Warna judul yang kuat namun profesional */
-    margin-bottom: 30px; /* Jarak yang cukup di bawah judul */
-    font-size: 30px; /* Ukuran judul yang jelas */
-    font-weight: 700; /* Tebal dan mudah dibaca */
-    text-shadow: none; /* Menghapus efek glow */
-    border-bottom: 2px solid #E0E0E0; /* Border bawah yang bersih */
-    padding-bottom: 15px;
-    letter-spacing: 0.5px; /* Spasi huruf yang nyaman */
-    animation: none; /* Menghapus animasi pulse */
+    color: #007bff;
+    margin-bottom: 30px;
 }
 
+.container {
+    display: flex; /* Menggunakan flexbox untuk layout kolom */
+    justify-content: center; /* Pusatkan kolom di tengah */
+    flex-wrap: wrap; /* Agar kolom bisa wrap di layar kecil */
+    gap: 20px; /* Jarak antar kolom */
+    padding: 20px;
+}
+
+.column {
+    flex: 1; /* Kolom akan mengambil ruang yang tersedia secara merata */
+    min-width: 300px; /* Lebar minimum untuk setiap kolom */
+    max-width: 450px; /* Lebar maksimum untuk setiap kolom */
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff; /* Latar belakang kolom putih */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sedikit bayangan */
+    margin-bottom: 20px; /* Tambahkan margin bawah untuk setiap kolom */
+}
+
+.column h2 {
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 22px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    text-align: center; /* Pusatkan judul kolom */
+}
+
+/* Bagian .section, .section-header, .input-group, .checkbox-group, dll.
+   Jika Anda tidak menggunakan form atau bagian input, Anda bisa menghapusnya dari CSS Anda.
+   Saya tetap menyertakannya di sini karena Anda memberikannya sebelumnya.
+*/
 .section {
-    border: 1px solid #E0E0E0; /* Border yang bersih */
-    padding: 20px; /* Padding yang lebih ringkas di dalam setiap bagian */
-    border-radius: 8px; /* Sudut membulat yang konsisten */
-    margin-top: 25px; /* Jarak antar bagian yang wajar */
-    background-color: #FDFDFD; /* Latar belakang bagian yang sangat terang */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Bayangan yang sangat halus */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transisi yang lebih halus */
-}
-
-.section:hover {
-    transform: translateY(-2px); /* Efek angkat yang lebih subtle */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Bayangan sedikit lebih jelas saat hover */
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+    background-color: #fcfcfc;
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px; /* Jarak yang lebih ringkas */
-    border-bottom: 1px solid #E0E0E0; /* Border bawah yang bersih */
-    padding-bottom: 10px;
-    text-shadow: none; /* Menghapus efek glow */
+    margin-bottom: 15px;
 }
 
-.section-header h2 {
-    color: #2C3E50; /* Warna judul bagian yang kuat */
+.section-header h3 {
+    color: #0056b3;
     margin: 0;
-    font-size: 22px; /* Ukuran judul bagian yang jelas */
-    font-weight: 600;
-    letter-spacing: 0.2px;
+    font-size: 18px;
 }
 
 .input-group {
-    margin-bottom: 15px; /* Jarak antar grup input yang lebih ringkas */
+    margin-bottom: 15px;
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 8px; /* Jarak label dengan input */
-    font-weight: 500;
-    color: #555555; /* Warna label yang mudah dibaca */
-    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .input-group input[type="text"],
 .input-group select {
-    width: 100%;
-    padding: 12px; /* Padding input yang nyaman */
-    border: 1px solid #CCCCCC; /* Border input yang netral */
-    border-radius: 6px; /* Sudut membulat yang moderat */
-    font-size: 16px; /* Ukuran font input yang standar */
-    box-sizing: border-box;
-    background-color: #FFFFFF; /* Latar belakang input putih */
-    color: #333333; /* Warna teks input gelap */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08); /* Bayangan inset yang halus */
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: calc(100% - 20px); /* Kurangi padding untuk lebar penuh */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
 }
 
-.input-group input[type="text"]:focus,
-.input-group select:focus {
-    border-color: #007BFF; /* Border biru standar saat fokus */
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Glow biru standar saat fokus */
-    background-color: #FFFFFF; /* Tetap putih saat fokus */
-    outline: none;
-}
-
-button {
-    background: #007BFF; /* Warna biru standar untuk tombol */
-    color: white; /* Teks putih */
-    border: none;
-    padding: 12px 25px; /* Padding tombol yang nyaman */
-    border-radius: 6px; /* Sudut membulat yang konsisten */
-    font-size: 18px; /* Ukuran font tombol yang jelas */
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    width: auto; /* Lebar otomatis */
-    display: block; /* Menjadi blok agar bisa di-margin auto */
-    margin: 25px auto 0 auto; /* Tengah dan ada jarak atas */
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-button:hover {
-    background-color: #0056b3; /* Warna biru lebih gelap saat hover */
-    transform: translateY(-2px); /* Efek angkat kecil saat hover */
-}
-
-.result-group {
-    background-color: #E8F0F7; /* Latar belakang hasil yang lebih terang */
-    border: 1px solid #C9D9E9; /* Border hasil yang serasi */
-    border-radius: 6px;
-    padding: 15px; /* Padding yang nyaman */
-    margin-top: 20px;
-}
-
-.result-group p {
-    margin: 8px 0; /* Jarak antar paragraf hasil yang ringkas */
-    font-size: 17px; /* Ukuran font hasil yang jelas */
-    color: #444444; /* Warna teks hasil yang mudah dibaca */
-    display: flex;
-    justify-content: space-between; /* Untuk menyejajarkan teks dan nilai */
-    align-items: center;
-}
-
-.result-group p span {
-    font-weight: 600;
-    color: #0056b3; /* Warna nilai hasil yang menonjol */
-    font-size: 18px;
-    text-align: right; /* Pastikan nilai angka rata kanan */
-    flex-grow: 1; /* Memungkinkan span untuk mengambil ruang yang tersedia */
-}
-
-/* Checkbox styling */
 .checkbox-group {
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* Pindahkan checkbox ke kanan */
-    margin-bottom: 0; /* Hapus margin bawah karena sudah di dalam section-header */
+    margin-bottom: 15px;
+    justify-content: flex-start;
 }
 
 .checkbox-group input[type="checkbox"] {
-    appearance: none; /* Hapus tampilan default */
+    margin-right: 10px;
     width: 20px;
     height: 20px;
-    border: 2px solid #007BFF;
-    border-radius: 4px;
-    background-color: #FFFFFF;
-    display: inline-block;
-    position: relative;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-}
-
-.checkbox-group input[type="checkbox"]:checked {
-    background-color: #007BFF;
-    border-color: #007BFF;
-}
-
-.checkbox-group input[type="checkbox"]:checked::after {
-    content: '✔'; /* Tanda centang */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 14px;
-    line-height: 1;
 }
 
 .checkbox-group label {
-    margin-left: 10px;
-    margin-bottom: 0; /* Pastikan tidak ada margin bawah tambahan */
+    margin-bottom: 0;
     font-weight: normal;
     color: #333;
     cursor: pointer;
 }
 
-/* Total Section (Summary) */
+
+.result-group {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e6ffe6; /* Latar belakang hijau muda untuk hasil */
+    border: 1px solid #ccebcc;
+    border-radius: 4px;
+}
+
+.result-group p {
+    display: flex; /* Menggunakan flexbox untuk mengatur teks dan angka di satu baris */
+    justify-content: space-between; /* Mendorong label ke kiri, angka ke kanan */
+    align-items: baseline; /* Menjaga teks dan angka tetap sejajar pada garis dasar */
+    margin-bottom: 5px; /* Jarak antar baris hasil */
+    font-size: 1.1em;
+}
+
+.result-group p:last-child {
+    margin-bottom: 0; /* Hapus margin bawah pada item terakhir */
+}
+
+.result-group span {
+    font-weight: bold;
+    color: #28a745; /* Warna hijau untuk hasil angka */
+    text-align: right; /* Memastikan teks di dalam span itu sendiri rata kanan */
+    /* Flexbox sudah mendorongnya ke kanan, text-align ini untuk memastikan teks di dalam span itu sendiri rata kanan jika ada ruang */
+}
+
 .total-section {
     margin-top: 40px;
-    padding: 30px; /* Padding lebih besar untuk menarik perhatian */
-    background-color: #E6F7FF; /* Latar belakang biru muda yang cerah */
-    border: 2px solid #007BFF; /* Border biru yang kuat */
-    border-radius: 10px; /* Sudut membulat yang lebih besar */
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Bayangan yang lebih menonjol */
-    animation: fadeInScale 0.5s ease-out; /* Animasi muncul yang halus */
+    padding: 25px;
+    background-color: #e6f7ff;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    text-align: center; /* Pusatkan konten di bagian ini */
+    max-width: 900px; /* Batasi lebar agar tidak terlalu lebar di layar besar */
+    margin-left: auto; /* Pusatkan total-section */
+    margin-right: auto; /* Pusatkan total-section */
 }
-
 .total-section h2 {
-    color: #007BFF; /* Warna judul ringkasan yang menonjol */
-    font-size: 28px; /* Ukuran judul ringkasan yang lebih besar */
+    color: #007bff;
+    font-size: 26px;
     margin-top: 0;
-    margin-bottom: 20px;
-    font-weight: 700;
-    border-bottom: 2px solid #B3E0FF; /* Border bawah yang lebih tebal */
-    padding-bottom: 10px;
+    margin-bottom: 15px;
 }
-
 .total-section p {
-    font-size: 20px; /* Ukuran font paragraf ringkasan */
-    font-weight: 500;
+    font-size: 24px;
+    font-weight: bold;
     color: #333;
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: 10px;
+    /* Jika Anda ingin teks dan angka di total-section juga rata kiri/kanan,
+       Anda perlu menerapkan flexbox pada .total-section p juga, seperti .result-group p.
+       Untuk saat ini, saya biarkan rata tengah sesuai text-align: center pada parent-nya. */
+    display: flex; /* Tambahkan ini */
+    justify-content: space-between; /* Tambahkan ini */
+    align-items: baseline; /* Tambahkan ini */
+    padding: 0 20px; /* Tambahkan padding agar tidak terlalu mepet tepi */
 }
-
-.total-section p span {
-    font-size: 26px; /* Ukuran font nilai akhir yang sangat menonjol */
-    font-weight: 700;
+.total-section p:last-child {
+    margin-bottom: 0;
+}
+.total-section span {
     color: #0056b3;
-    text-align: right;
-    flex-grow: 1;
+    text-align: right; /* Tambahkan ini untuk angka */
 }
 
-/* Media Queries for Responsiveness */
+.profile-link-below-summary {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.profile-link-below-summary a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.profile-link-below-summary a:hover {
+    text-decoration: underline;
+}
+
+/* Responsif design untuk layar kecil */
 @media (max-width: 768px) {
     .container {
-        padding: 20px;
-        margin: 15px;
+        flex-direction: column;
+        align-items: center;
     }
 
-    h1 {
-        font-size: 26px;
-        margin-bottom: 20px;
+    .column {
+        min-width: unset;
+        width: 90%; /* Ambil lebih banyak lebar di layar kecil */
+        max-width: 500px;
     }
 
-    .section {
-        padding: 15px;
-        margin-top: 20px;
-    }
-
-    .section-header h2 {
-        font-size: 20px;
-    }
-
-    .input-group label,
-    .input-group input,
-    .input-group select,
-    .result-group p,
     .total-section p {
-        font-size: 15px;
-    }
-
-    button {
-        padding: 10px 20px;
-        font-size: 16px;
-    }
-
-    .result-group p span,
-    .total-section p span {
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding: 10px;
-    }
-    .container {
-        padding: 15px;
-        margin: 10px;
-    }
-    h1 {
-        font-size: 24px;
-        margin-bottom: 15px;
-    }
-    .section-header {
-        flex-direction: column; /* Stack header and checkbox on small screens */
-        align-items: flex-start;
-    }
-    .checkbox-group {
-        margin-top: 10px;
-        justify-content: flex-start; /* Align checkbox to left on small screens */
-    }
-    button {
-        width: 100%; /* Full width button on very small screens */
+        padding: 0 10px; /* Sesuaikan padding untuk layar kecil */
     }
 }

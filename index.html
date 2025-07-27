@@ -6,7 +6,30 @@
     <title>Kalkulator Pajak Untuk Gross Up PPN dan PPH</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Styling untuk select box, bisa dipindahkan ke style.css jika diinginkan */
+        /* Pastikan style.css Anda ada dan berisi styling dasar */
+        /* Anda juga bisa memindahkan style yang ada di <head> ini ke style.css */
+        .container {
+            display: flex; /* Menggunakan flexbox untuk layout kolom */
+            justify-content: space-around;
+            flex-wrap: wrap; /* Agar kolom bisa wrap di layar kecil */
+            gap: 20px; /* Jarak antar kolom */
+            padding: 20px;
+        }
+        .column {
+            flex: 1; /* Kolom akan mengambil ruang yang tersedia secara merata */
+            min-width: 300px; /* Lebar minimum untuk setiap kolom */
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fcfcfc;
+            margin-bottom: 20px; /* Tambahkan margin bawah untuk setiap kolom */
+        }
+        .section-header h2 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        /* Tambahkan atau sesuaikan styling lainnya dari file Anda yang ada */
         .input-group select {
             width: calc(100% - 20px);
             padding: 10px;
@@ -16,7 +39,6 @@
             background-color: white;
         }
 
-        /* Styling dasar untuk section, bisa disesuaikan lebih lanjut di style.css */
         .section {
             border: 1px solid #e0e0e0;
             padding: 20px;
@@ -53,7 +75,13 @@
             color: #333;
         }
 
-        /* Styling untuk bagian ringkasan akhir */
+        .result-group p {
+            font-weight: bold;
+        }
+        .result-group span {
+            color: green; /* Warna hijau untuk hasil */
+        }
+        
         .total-section {
             margin-top: 40px;
             padding: 25px;
@@ -77,139 +105,263 @@
             color: #0056b3;
         }
 
-        /* Styling untuk teks profil di bawah ringkasan */
         .profile-link-below-summary {
-            text-align: center; /* Pusatkan teks */
-            margin-top: 20px; /* Jarak dari ringkasan di atasnya */
-            font-size: 0.9em; /* Ukuran font lebih kecil */
-            color: #555; /* Warna teks yang sedikit pudar */
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
         }
 
         .profile-link-below-summary a {
-            color: #007bff; /* Warna link */
-            text-decoration: none; /* Hilangkan garis bawah default */
+            color: #007bff;
+            text-decoration: none;
         }
 
         .profile-link-below-summary a:hover {
-            text-decoration: underline; /* Munculkan garis bawah saat di-hover */
+            text-decoration: underline;
         }
+
     </style>
 </head>
 <body>
+    <h1>Kalkulator Pajak Untuk Gross Up PPN dan PPH</h1>
+
     <div class="container">
-        <h1>Kalkulator Pajak Untuk Gross Up PPN dan PPH</h1>
+        <div class="column">
+            <h2>Kalkulator Net</h2>
 
-        <div class="section">
-            <h2>Informasi Dasar</h2>
-            <div class="input-group">
-                <label for="uangMasukRekening">Uang yang diharapkan masuk ke Rekening Bank:</label>
-                <input type="text" id="uangMasukRekening" placeholder="Contoh: 17000000">
-            </div>
-            <button id="hitungPPNButton">Hitung Pajak</button>
-        </div>
+            <div class="section">
+                <h3>Informasi Dasar</h3>
+                <div class="input-group">
+                    <label for="uangMasukRekening_col1">Uang yang diharapkan masuk ke Rekening Bank:</label>
+                    <input type="text" id="uangMasukRekening_col1" placeholder="Contoh: 10000000">
+                </div>
+                </div>
 
-        <div class="section">
-            <div class="section-header">
-                <h2>PPN</h2>
-                <div class="input-group checkbox-group">
-                    <input type="checkbox" id="ppnApplicable" checked>
-                    <label for="ppnApplicable">Applicable</label>
+            <div class="section">
+                <div class="section-header">
+                    <h3>PPN</h3>
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="ppnApplicable_col1" checked>
+                        <label for="ppnApplicable_col1">Applicable</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="tarifPPN_col1">Pilih Tarif PPN:</label>
+                    <select id="tarifPPN_col1">
+                        <option value="">-- Pilih Tarif --</option>
+                        <option value="1.1">1.1%</option>
+                        <option value="11" selected>11%</option>
+                        <option value="12">12%</option>
+                    </select>
+                </div>
+                <div class="result-group">
+                    <p>Harga Jual: <span id="hargaJualSebelumPPN_col1">0</span></p>
+                    <p>PPN: <span id="besarPPN_col1">0</span></p>
                 </div>
             </div>
-            <div class="input-group">
-                <label for="tarifPPN">Pilih Tarif PPN:</label>
-                <select id="tarifPPN">
-                    <option value="">-- Pilih Tarif --</option>
-                    <option value="1.1">1.1%</option>
-                    <option value="11" selected>11%</option>
-                    <option value="12">12%</option>
-                </select>
-            </div>
-            <div class="result-group">
-                <p>Harga Jual: <span id="hargaJualSebelumPPN">0</span></p>
-                <p>PPN: <span id="besarPPN">0</span></p>
-            </div>
-        </div>
 
-        <div class="section">
-            <div class="section-header">
-                <h2>PPh 21</h2>
-                <div class="input-group checkbox-group">
-                    <input type="checkbox" id="pph21Applicable">
-                    <label for="pph21Applicable">Applicable</label>
+            <div class="section">
+                <div class="section-header">
+                    <h3>PPh 21</h3>
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="pph21Applicable_col1">
+                        <label for="pph21Applicable_col1">Applicable</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="tarifPPh21_col1">Tarif PPh 21 (%):</label>
+                    <select id="tarifPPh21_col1">
+                        <option value="2.5" selected>5% x 50% (2.5%)</option>
+                        <option value="5">5%</option>
+                    </select>
+                </div>
+                <div class="result-group">
+                    <p>Dasar Pengenaan Pajak (PPh 21): <span id="dppPPh21_col1">0</span></p>
+                    <p>Besar PPh 21: <span id="besarPPh21_col1">0</span></p>
                 </div>
             </div>
-            <div class="input-group">
-                <label for="tarifPPh21">Tarif PPh 21 (%):</label>
-                <select id="tarifPPh21">
-                    <option value="2.5" selected>5% x 50% (2.5%)</option>
-                    <option value="5">5%</option>
-                </select>
-            </div>
-            <div class="result-group">
-                <p>Dasar Pengenaan Pajak (PPh 21): <span id="dppPPh21">0</span></p>
-                <p>Besar PPh 21: <span id="besarPPh21">0</span></p>
-            </div>
-        </div>
 
-        <div class="section">
-            <div class="section-header">
-                <h2>PPh 23</h2>
-                <div class="input-group checkbox-group">
-                    <input type="checkbox" id="pph23Applicable">
-                    <label for="pph23Applicable">Applicable</label>
+            <div class="section">
+                <div class="section-header">
+                    <h3>PPh 23</h3>
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="pph23Applicable_col1">
+                        <label for="pph23Applicable_col1">Applicable</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="tarifPPh23_col1">Tarif PPh 23 (%):</label>
+                    <select id="tarifPPh23_col1">
+                        <option value="2" selected>2% (Sewa dan Jasa Selain PPH Final)</option>
+                        <option value="15">15% (Dividen, Bunga dan Royalti)</option>
+                    </select>
+                </div>
+                <div class="result-group">
+                    <p>Dasar Pengenaan Pajak (PPh 23): <span id="dppPPh23_col1">0</span></p>
+                    <p>Besar PPh 23: <span id="besarPPh23_col1">0</span></p>
                 </div>
             </div>
-            <div class="input-group">
-                <label for="tarifPPh23">Tarif PPh 23 (%):</label>
-                <select id="tarifPPh23">
-                    <option value="2" selected>2% (Sewa dan Jasa Selain PPH Final)</option>
-                    <option value="15">15% (Dividen, Bunga dan Royalti)</option>
-                </select>
-            </div>
-            <div class="result-group">
-                <p>Dasar Pengenaan Pajak (PPh 23): <span id="dppPPh23">0</span></p>
-                <p>Besar PPh 23: <span id="besarPPh23">0</span></p>
-            </div>
-        </div>
 
-        <div class="section">
-            <div class="section-header">
-                <h2>PPh 4(2)</h2>
-                <div class="input-group checkbox-group">
-                    <input type="checkbox" id="pph42Applicable">
-                    <label for="pph42Applicable">Applicable</label>
+            <div class="section">
+                <div class="section-header">
+                    <h3>PPh 4(2)</h3>
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="pph42Applicable_col1">
+                        <label for="pph42Applicable_col1">Applicable</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="tarifPPh42_col1">Tarif PPh 4(2) (%):</label>
+                    <select id="tarifPPh42_col1">
+                        <option value="0.5">0.5% (UMKM)</option>
+                        <option value="2.5">2.5% (Jasa Konstruksi - Pelaksana)</option>
+                        <option value="4">4% (Jasa Konstruksi - Perencana/Pengawas)</option>
+                        <option value="6">6% (Jasa Konstruksi - Konsultasi)</option>
+                        <option value="10" selected>10% (Sewa Tanah/Bangunan)</option>
+                        <option value="20">20% (Hadiah/Undian)</option>
+                    </select>
+                </div>
+                <div class="result-group">
+                    <p>Dasar Pengenaan Pajak (PPh 4(2)): <span id="dppPPh42_col1">0</span></p>
+                    <p>Besar PPh 4(2): <span id="besarPPh42_col1">0</span></p>
                 </div>
             </div>
-            <div class="input-group">
-                <label for="tarifPPh42">Tarif PPh 4(2) (%):</label>
-                <select id="tarifPPh42">
-                    <option value="0.5">0.5% (UMKM)</option>
-                    <option value="2.5">2.5% (Jasa Konstruksi - Pelaksana)</option>
-                    <option value="4">4% (Jasa Konstruksi - Perencana/Pengawas)</option>
-                    <option value="6">6% (Jasa Konstruksi - Konsultasi)</option>
-                    <option value="10" selected>10% (Sewa Tanah/Bangunan)</option>
-                    <option value="20">20% (Hadiah/Undian)</option>
-                </select>
-            </div>
-            <div class="result-group">
-                <p>Dasar Pengenaan Pajak (PPh 4(2)): <span id="dppPPh42">0</span></p>
-                <p>Besar PPh 4(2): <span id="besarPPh42">0</span></p>
+
+            <div class="total-section">
+                <h2>Ringkasan Net</h2>
+                <p>Harga Jual: <span id="summaryHargaJual_col1">0</span></p>
+                <p>PPN: <span id="summaryBesarPPN_col1">0</span></p>
+                <p>PPH: <span id="totalPPhDipotong_col1">0</span></p>
+                <p>Uang Diterima: <span id="uangDiterima_col1">0</span></p>
             </div>
         </div>
 
-        <div class="total-section">
-            <h2>Ringkasan</h2>
-            <p>Harga Jual: <span id="summaryHargaJual">0</span></p>
-            <p>Penambahan PPN: <span id="summaryBesarPPN">0</span></p>
-            <p>Pengurangan PPH: <span id="totalPPhDipotong">0</span></p>
-            <p>Uang Diterima: <span id="uangDiterima">0</span></p>
+        <div class="column">
+            <h2>Kalkulator Gross</h2>
+
+            <div class="section">
+                <h3>Informasi Dasar</h3>
+                <div class="input-group">
+                    <label for="hargaJual_col2">Harga Jual yang disepakati:</label>
+                    <input type="text" id="hargaJual_col2" placeholder="Contoh: 10000000">
+                </div>
+                </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <h3>PPN</h3>
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="ppnApplicable_col2" checked>
+                        <label for="ppnApplicable_col2">Applicable</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="tarifPPN_col2">Pilih Tarif PPN:</label>
+                    <select id="tarifPPN_col2">
+                        <option value="">-- Pilih Tarif --</option>
+                        <option value="1.1">1.1%</option>
+                        <option value="11" selected>11%</option>
+                        <option value="12">12%</option>
+                    </select>
+                </div>
+                <div class="result-group">
+                    <p>Harga Jual: <span id="hargaJualSebelumPPN_col2">0</span></p>
+                    <p>PPN: <span id="besarPPN_col2">0</span></p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <h3>PPh 21</h3>
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="pph21Applicable_col2">
+                        <label for="pph21Applicable_col2">Applicable</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="tarifPPh21_col2">Tarif PPh 21 (%):</label>
+                    <select id="tarifPPh21_col2">
+                        <option value="2.5" selected>5% x 50% (2.5%)</option>
+                        <option value="5">5%</option>
+                    </select>
+                </div>
+                <div class="result-group">
+                    <p>Dasar Pengenaan Pajak (PPh 21): <span id="dppPPh21_col2">0</span></p>
+                    <p>Besar PPh 21: <span id="besarPPh21_col2">0</span></p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <h3>PPh 23</h3>
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="pph23Applicable_col2">
+                        <label for="pph23Applicable_col2">Applicable</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="tarifPPh23_col2">Tarif PPh 23 (%):</label>
+                    <select id="tarifPPh23_col2">
+                        <option value="2" selected>2% (Sewa dan Jasa Selain PPH Final)</option>
+                        <option value="15">15% (Dividen, Bunga dan Royalti)</option>
+                    </select>
+                </div>
+                <div class="result-group">
+                    <p>Dasar Pengenaan Pajak (PPh 23): <span id="dppPPh23_col2">0</span></p>
+                    <p>Besar PPh 23: <span id="besarPPh23_col2">0</span></p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <h3>PPh 4(2)</h3>
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="pph42Applicable_col2">
+                        <label for="pph42Applicable_col2">Applicable</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="tarifPPh42_col2">Tarif PPh 4(2) (%):</label>
+                    <select id="tarifPPh42_col2">
+                        <option value="0.5">0.5% (UMKM)</option>
+                        <option value="2.5">2.5% (Jasa Konstruksi - Pelaksana)</option>
+                        <option value="4">4% (Jasa Konstruksi - Perencana/Pengawas)</option>
+                        <option value="6">6% (Jasa Konstruksi - Konsultasi)</option>
+                        <option value="10" selected>10% (Sewa Tanah/Bangunan)</option>
+                        <option value="20">20% (Hadiah/Undian)</option>
+                    </select>
+                </div>
+                <div class="result-group">
+                    <p>Dasar Pengenaan Pajak (PPh 4(2)): <span id="dppPPh42_col2">0</span></p>
+                    <p>Besar PPh 4(2): <span id="besarPPh42_col2">0</span></p>
+                </div>
+            </div>
+
+            <div class="total-section">
+                <h2>Ringkasan Gross</h2>
+                <p>Harga Jual: <span id="summaryHargaJual_col2">0</span></p>
+                <p>PPN: <span id="summaryBesarPPN_col2">0</span></p>
+                <p>PPH: <span id="totalPPhDipotong_col2">0</span></p>
+                <p>Uang Diterima: <span id="uangDiterima_col2">0</span></p>
+            </div>
         </div>
 
-        <div class="profile-link-below-summary">
-            <p>Dibuat oleh: <a href="https://www.linkedin.com/in/arief-indrawan" target="_blank">Arief Indrawan</a></p>
+        <div class="column">
+            <h2>Selisih Hasil</h2>
+            <div class="section">
+                <div class="result-group">
+                    <p>Selisih Harga Jual: <span id="diffHargaJual">0</span></p>
+                    <p>Selisih PPN: <span id="diffBesarPPN">0</span></p>
+                    <p>Selisih PPH: <span id="diffTotalPPH">0</span></p>
+                    <p>Selisih Uang Diterima: <span id="diffUangDiterima">0</span></p>
+                </div>
+            </div>
         </div>
+    </div>
 
+    <div class="profile-link-below-summary">
+        <p>Dibuat oleh: <a href="https://www.linkedin.com/in/arief-indrawan" target="_blank">Arief Indrawan</a></p>
     </div>
 
     <script src="script.js"></script>
