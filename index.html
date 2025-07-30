@@ -39,7 +39,8 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-        .input-group select {
+        /* Tambahan styling untuk input datalist */
+        .input-group input[type="text"][list] {
             width: calc(100% - 20px);
             padding: 10px;
             border: 1px solid #ddd;
@@ -47,6 +48,7 @@
             font-size: 16px;
             background-color: white;
         }
+
 
         .section {
             border: 1px solid #e0e0e0;
@@ -271,10 +273,84 @@
                 </div>
                 <div class="input-group">
                     <label for="tarifPPh23_col1">Tarif PPh 23 (%):</label>
-                    <select id="tarifPPh23_col1">
-                        <option value="2" selected>2% (Sewa dan Jasa Selain PPH Final)</option>
-                        <option value="15">15% (Dividen, Bunga dan Royalti)</option>
-                    </select>
+                    <input list="pph23TarifList_col1" id="tarifPPh23_col1" placeholder="Cari atau pilih tarif PPh 23" value="2% (Sewa dan Jasa Selain PPH Final)">
+                    <datalist id="pph23TarifList_col1">
+                        <option value="15% (Dividen)">
+                        <option value="15% (Bunga Selain yang Dikenakan PPh Pasal 4 ayat (2))">
+                        <option value="15% (Royalti)">
+                        <option value="15% (Hadiah, Penghargaan, Bonus dan Lainnya Selain yang Telah Dipotong PPh Pasal 21 Ayat (1) Huruf E UU PPh)">
+                        <option value="2% (Sewa dan Penghasilan Lain Sehubungan Dengan Penggunaan Harta Kecuali Sewa Tanah dan/atau Bangunan yang Telah Dikenai PPh Pasal 4 Ayat (2) UU PPh.)">
+                        <option value="2% (Jasa Teknik)">
+                        <option value="2% (Jasa Manajemen)">
+                        <option value="2% (Jasa Konsultan)">
+                        <option value="2% (Jasa Penilai (Appraisal))">
+                        <option value="2% (Jasa Aktuaris)">
+                        <option value="2% (Jasa Akuntansi, Pembukuan, dan Atestasi Laporan Keuangan)">
+                        <option value="2% (Jasa Hukum)">
+                        <option value="2% (Jasa Arsitektur)">
+                        <option value="2% (Jasa Perencanaan Kota dan Arsitektur Landscape;)">
+                        <option value="2% (Jasa Perancang (Design))">
+                        <option value="2% (Jasa Pengeboran (Drilling) di Bidang Penambangan Minyak dan Gas Bumi (Migas) Kecuali yang Dilakukan oleh Badan Usaha Tetap (BUT))">
+                        <option value="2% (Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas))">
+                        <option value="2% (Jasa Penambangan dan Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas))">
+                        <option value="2% (Jasa Penunjang di Bidang Penerbangan dan Bandar Udara)">
+                        <option value="2% (Jasa Penebangan Hutan)">
+                        <option value="2% (Jasa Pengolahan Limbah)">
+                        <option value="2% (Jasa Penyedia Tenaga Kerja dan/atau Tenaga Ahli (Outsourcing Services))">
+                        <option value="2% (Jasa Perantara dan/atau Keagenan)">
+                        <option value="2% (Jasa Bidang Perdagangan Surat-Surat Berharga, Kecuali yang Dilakukan Bursa Efek, Kustodian Sentral Efek Indonesia (KSEI) dan Kliring Penjaminan Efek Indonesia (KPEI))">
+                        <option value="2% (Jasa Kustodian/Penyimpanan/Penitipan, Kecuali yang Dilakukan Oleh KSEI)">
+                        <option value="2% (Jasa Pengisian Suara (Dubbing) dan/atau Sulih Suara)">
+                        <option value="2% (Jasa Mixing Film)">
+                        <option value="2% (Jasa Pembuatan Sarana Promosi Film, Iklan, Poster, Foto, Slide, Klise, Banner, Pamphlet, Baliho dan Folder)">
+                        <option value="2% (Jasa Sehubungan Dengan Software Atau Hardware Atau Sistem Komputer, Termasuk Perawatan, Pemeliharaan dan Perbaikan.)">
+                        <option value="2% (Jasa Pembuatan dan/atau Pengelolaan Website)">
+                        <option value="2% (Jasa Internet Termasuk Sambungannya)">
+                        <option value="2% (Jasa Penyimpanan, Pengolahan dan/atau Penyaluran Data, Informasi, dan/atau Program)">
+                        <option value="2% (Jasa Instalasi/Pemasangan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya Di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi;)">
+                        <option value="2% (Jasa Perawatan/Perbaikan/Pemeliharaan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi)">
+                        <option value="2% (Jasa Perawatan Kendaraan dan/atau Alat Transportasi Darat, Laut dan Udara)">
+                        <option value="2% (Jasa Maklon)">
+                        <option value="2% (Jasa Penyelidikan dan Keamanan)">
+                        <option value="2% (Jasa Penyelenggara Kegiatan Atau Event Organizer)">
+                        <option value="2% (Jasa Penyediaan Tempat dan/atau Waktu Dalam Media Massa, Media Luar Ruang Atau Media Lain Untuk Penyampaian Informasi, dan/atau Jasa Periklanan)">
+                        <option value="2% (Jasa Pembasmian Hama)">
+                        <option value="2% (Jasa Kebersihan Atau Cleaning Service)">
+                        <option value="2% (Jasa Sedot Septic Tank)">
+                        <option value="2% (Jasa Pemeliharaan Kolam)">
+                        <option value="2% (Jasa Katering Atau Tata Boga)">
+                        <option value="2% (Jasa Freight Forwarding)">
+                        <option value="2% (Jasa Logistik)">
+                        <option value="2% (Jasa Pengurusan Dokumen)">
+                        <option value="2% (Jasa Pengepakan)">
+                        <option value="2% (Jasa Loading dan Unloading)">
+                        <option value="2% (Jasa Laboratorium dan/atau Pengujian Kecuali yang Dilakukan oleh Lembaga atau Institusi Pendidikan Dalam Rangka Penelitian Akademis)">
+                        <option value="2% (Jasa Pengelolaan Parkir)">
+                        <option value="2% (Jasa Penyondiran Tanah)">
+                        <option value="2% (Jasa Penyiapan dan/atau Pengolahan Lahan)">
+                        <option value="2% (Jasa Pembibitan dan/atau Penanaman Bibit)">
+                        <option value="2% (Jasa Pemeliharaan Tanaman)">
+                        <option value="2% (Jasa Pemanenan)">
+                        <option value="2% (Jasa Pengolahan Hasil Pertanian, Perkebunan, Perikanan, Peternakan dan/atau Perhutanan)">
+                        <option value="2% (Jasa Dekorasi)">
+                        <option value="2% (Jasa Pencetakan/Penerbitan)">
+                        <option value="2% (Jasa Penerjemahan)">
+                        <option value="2% (Jasa Pengangkutan/Ekspedisi Kecuali Yang Telah Diatur Dalam Pasal 15 Undang-Undang Pajak Penghasilan)">
+                        <option value="2% (Jasa Pelayanan Pelabuhan)">
+                        <option value="2% (Jasa Pengangkutan Melalui Jalur Pipa)">
+                        <option value="2% (Jasa Pengelolaan Penitipan Anak)">
+                        <option value="2% (Jasa Pelatihan dan/atau Kursus)">
+                        <option value="2% (Jasa Pengiriman dan Pengisian Uang Ke Atm)">
+                        <option value="2% (Jasa Sertifikasi)">
+                        <option value="2% (Jasa Survey)">
+                        <option value="2% (Jasa Tester)">
+                        <option value="2% (Jasa Selain Jasa-Jasa Tersebut di Atas yang Pembayarannya Dibebankan pada APBN (Anggaran Pendapatan dan Belanja Negara) Atau APBD (Anggaran Pendapatan dan Belanja Daerah).)">
+                        <option value="2% (Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Token Oleh Penyelenggara Distribusi)">
+                        <option value="2% (Jasa Pemasaran dengan Media Voucer Oleh Penyelenggara Voucer)">
+                        <option value="2% (Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Voucer Oleh Penyelenggara Voucer dan Penyelenggara Distribusi)">
+                        <option value="2% (Jasa Penyelenggaraan Program Loyalitas dan Penghargaan Pelanggan (Consumer Loyalty/Reward Program) Oleh Penyelenggara Voucer)">
+                        <option value="0.00% (Bunga Pinjaman yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap Melalui Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi)">
+                    </datalist>
                 </div>
                 <div class="result-group">
                     <p>Dasar Pengenaan Pajak (PPh 23): <span id="dppPPh23_col1">0</span></p>
@@ -381,10 +457,84 @@
                 </div>
                 <div class="input-group">
                     <label for="tarifPPh23_col2">Tarif PPh 23 (%):</label>
-                    <select id="tarifPPh23_col2">
-                        <option value="2" selected>2% (Sewa dan Jasa Selain PPH Final)</option>
-                        <option value="15">15% (Dividen, Bunga dan Royalti)</option>
-                    </select>
+                    <input list="pph23TarifList_col2" id="tarifPPh23_col2" placeholder="Cari atau pilih tarif PPh 23" value="2% (Sewa dan Jasa Selain PPH Final)">
+                    <datalist id="pph23TarifList_col2">
+                        <option value="15% (Dividen)">
+                        <option value="15% (Bunga Selain yang Dikenakan PPh Pasal 4 ayat (2))">
+                        <option value="15% (Royalti)">
+                        <option value="15% (Hadiah, Penghargaan, Bonus dan Lainnya Selain yang Telah Dipotong PPh Pasal 21 Ayat (1) Huruf E UU PPh)">
+                        <option value="2% (Sewa dan Penghasilan Lain Sehubungan Dengan Penggunaan Harta Kecuali Sewa Tanah dan/atau Bangunan yang Telah Dikenai PPh Pasal 4 Ayat (2) UU PPh.)">
+                        <option value="2% (Jasa Teknik)">
+                        <option value="2% (Jasa Manajemen)">
+                        <option value="2% (Jasa Konsultan)">
+                        <option value="2% (Jasa Penilai (Appraisal))">
+                        <option value="2% (Jasa Aktuaris)">
+                        <option value="2% (Jasa Akuntansi, Pembukuan, dan Atestasi Laporan Keuangan)">
+                        <option value="2% (Jasa Hukum)">
+                        <option value="2% (Jasa Arsitektur)">
+                        <option value="2% (Jasa Perencanaan Kota dan Arsitektur Landscape;)">
+                        <option value="2% (Jasa Perancang (Design))">
+                        <option value="2% (Jasa Pengeboran (Drilling) di Bidang Penambangan Minyak dan Gas Bumi (Migas) Kecuali yang Dilakukan oleh Badan Usaha Tetap (BUT))">
+                        <option value="2% (Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas))">
+                        <option value="2% (Jasa Penambangan dan Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas))">
+                        <option value="2% (Jasa Penunjang di Bidang Penerbangan dan Bandar Udara)">
+                        <option value="2% (Jasa Penebangan Hutan)">
+                        <option value="2% (Jasa Pengolahan Limbah)">
+                        <option value="2% (Jasa Penyedia Tenaga Kerja dan/atau Tenaga Ahli (Outsourcing Services))">
+                        <option value="2% (Jasa Perantara dan/atau Keagenan)">
+                        <option value="2% (Jasa Bidang Perdagangan Surat-Surat Berharga, Kecuali yang Dilakukan Bursa Efek, Kustodian Sentral Efek Indonesia (KSEI) dan Kliring Penjaminan Efek Indonesia (KPEI))">
+                        <option value="2% (Jasa Kustodian/Penyimpanan/Penitipan, Kecuali yang Dilakukan Oleh KSEI)">
+                        <option value="2% (Jasa Pengisian Suara (Dubbing) dan/atau Sulih Suara)">
+                        <option value="2% (Jasa Mixing Film)">
+                        <option value="2% (Jasa Pembuatan Sarana Promosi Film, Iklan, Poster, Foto, Slide, Klise, Banner, Pamphlet, Baliho dan Folder)">
+                        <option value="2% (Jasa Sehubungan Dengan Software Atau Hardware Atau Sistem Komputer, Termasuk Perawatan, Pemeliharaan dan Perbaikan.)">
+                        <option value="2% (Jasa Pembuatan dan/atau Pengelolaan Website)">
+                        <option value="2% (Jasa Internet Termasuk Sambungannya)">
+                        <option value="2% (Jasa Penyimpanan, Pengolahan dan/atau Penyaluran Data, Informasi, dan/atau Program)">
+                        <option value="2% (Jasa Instalasi/Pemasangan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya Di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi;)">
+                        <option value="2% (Jasa Perawatan/Perbaikan/Pemeliharaan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi)">
+                        <option value="2% (Jasa Perawatan Kendaraan dan/atau Alat Transportasi Darat, Laut dan Udara)">
+                        <option value="2% (Jasa Maklon)">
+                        <option value="2% (Jasa Penyelidikan dan Keamanan)">
+                        <option value="2% (Jasa Penyelenggara Kegiatan Atau Event Organizer)">
+                        <option value="2% (Jasa Penyediaan Tempat dan/atau Waktu Dalam Media Massa, Media Luar Ruang Atau Media Lain Untuk Penyampaian Informasi, dan/atau Jasa Periklanan)">
+                        <option value="2% (Jasa Pembasmian Hama)">
+                        <option value="2% (Jasa Kebersihan Atau Cleaning Service)">
+                        <option value="2% (Jasa Sedot Septic Tank)">
+                        <option value="2% (Jasa Pemeliharaan Kolam)">
+                        <option value="2% (Jasa Katering Atau Tata Boga)">
+                        <option value="2% (Jasa Freight Forwarding)">
+                        <option value="2% (Jasa Logistik)">
+                        <option value="2% (Jasa Pengurusan Dokumen)">
+                        <option value="2% (Jasa Pengepakan)">
+                        <option value="2% (Jasa Loading dan Unloading)">
+                        <option value="2% (Jasa Laboratorium dan/atau Pengujian Kecuali yang Dilakukan oleh Lembaga atau Institusi Pendidikan Dalam Rangka Penelitian Akademis)">
+                        <option value="2% (Jasa Pengelolaan Parkir)">
+                        <option value="2% (Jasa Penyondiran Tanah)">
+                        <option value="2% (Jasa Penyiapan dan/atau Pengolahan Lahan)">
+                        <option value="2% (Jasa Pembibitan dan/atau Penanaman Bibit)">
+                        <option value="2% (Jasa Pemeliharaan Tanaman)">
+                        <option value="2% (Jasa Pemanenan)">
+                        <option value="2% (Jasa Pengolahan Hasil Pertanian, Perkebunan, Perikanan, Peternakan dan/atau Perhutanan)">
+                        <option value="2% (Jasa Dekorasi)">
+                        <option value="2% (Jasa Pencetakan/Penerbitan)">
+                        <option value="2% (Jasa Penerjemahan)">
+                        <option value="2% (Jasa Pengangkutan/Ekspedisi Kecuali Yang Telah Diatur Dalam Pasal 15 Undang-Undang Pajak Penghasilan)">
+                        <option value="2% (Jasa Pelayanan Pelabuhan)">
+                        <option value="2% (Jasa Pengangkutan Melalui Jalur Pipa)">
+                        <option value="2% (Jasa Pengelolaan Penitipan Anak)">
+                        <option value="2% (Jasa Pelatihan dan/atau Kursus)">
+                        <option value="2% (Jasa Pengiriman dan Pengisian Uang Ke Atm)">
+                        <option value="2% (Jasa Sertifikasi)">
+                        <option value="2% (Jasa Survey)">
+                        <option value="2% (Jasa Tester)">
+                        <option value="2% (Jasa Selain Jasa-Jasa Tersebut di Atas yang Pembayarannya Dibebankan pada APBN (Anggaran Pendapatan dan Belanja Negara) Atau APBD (Anggaran Pendapatan dan Belanja Daerah).)">
+                        <option value="2% (Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Token Oleh Penyelenggara Distribusi)">
+                        <option value="2% (Jasa Pemasaran dengan Media Voucer Oleh Penyelenggara Voucer)">
+                        <option value="2% (Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Voucer Oleh Penyelenggara Voucer dan Penyelenggara Distribusi)">
+                        <option value="2% (Jasa Penyelenggaraan Program Loyalitas dan Penghargaan Pelanggan (Consumer Loyalty/Reward Program) Oleh Penyelenggara Voucer)">
+                        <option value="0.00% (Bunga Pinjaman yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap Melalui Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi)">
+                    </datalist>
                 </div>
                 <div class="result-group">
                     <p>Dasar Pengenaan Pajak (PPh 23): <span id="dppPPh23_col2">0</span></p>
