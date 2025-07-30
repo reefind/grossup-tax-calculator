@@ -1,596 +1,208 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Pajak Untuk Gross Up PPN dan PPH</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="AI.png">
-    <style>
-        /* Pastikan style.css Anda ada dan berisi styling dasar */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
 
-        .container {
-            display: flex;
-            justify-content: center; /* Pusatkan kolom di tengah */
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-        }
-        .column {
-            flex: 1;
-            min-width: 300px;
-            max-width: 450px; /* Batasi lebar maksimum kolom agar tidak terlalu lebar */
-            border: 1px solid #e0e0e0;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #fcfcfc;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .section-header h2 {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        /* Tambahan styling untuk input datalist */
-        .input-group input[type="text"][list] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            background-color: white;
-        }
+h1 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 30px;
+}
+
+.container {
+    display: flex; /* Menggunakan flexbox untuk layout kolom */
+    justify-content: center; /* Pusatkan kolom di tengah */
+    flex-wrap: wrap; /* Agar kolom bisa wrap di layar kecil */
+    gap: 20px; /* Jarak antar kolom */
+    padding: 20px;
+}
+
+.column {
+    flex: 1; /* Kolom akan mengambil ruang yang tersedia secara merata */
+    min-width: 300px; /* Lebar minimum untuk setiap kolom */
+    max-width: 450px; /* Lebar maksimum untuk setiap kolom */
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff; /* Latar belakang kolom putih */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sedikit bayangan */
+    margin-bottom: 20px; /* Tambahkan margin bawah untuk setiap kolom */
+}
+
+.column h2 {
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 22px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    text-align: center; /* Pusatkan judul kolom */
+}
+
+/* Bagian .section, .section-header, .input-group, .checkbox-group, dll.
+   Jika Anda tidak menggunakan form atau bagian input, Anda bisa menghapusnya dari CSS Anda.
+   Saya tetap menyertakannya di sini karena Anda memberikannya sebelumnya.
+*/
+.section {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+    background-color: #fcfcfc;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section-header h3 {
+    color: #0056b3;
+    margin: 0;
+    font-size: 18px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input[type="text"],
+.input-group select {
+    width: calc(100% - 20px); /* Kurangi padding untuk lebar penuh */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    justify-content: flex-start;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+    color: #333;
+    cursor: pointer;
+}
 
 
-        .section {
-            border: 1px solid #e0e0e0;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 30px;
-            background-color: #fcfcfc;
-        }
+.result-group {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e6ffe6; /* Latar belakang hijau muda untuk hasil */
+    border: 1px solid #ccebcc;
+    border-radius: 4px;
+}
 
-        .section h2 {
-            color: #0056b3;
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 22px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
+.result-group p {
+    display: flex; /* Menggunakan flexbox untuk mengatur teks dan angka di satu baris */
+    justify-content: space-between; /* Mendorong label ke kiri, angka ke kanan */
+    align-items: baseline; /* Menjaga teks dan angka tetap sejajar pada garis dasar */
+    margin-bottom: 5px; /* Jarak antar baris hasil */
+    font-size: 1.1em;
+}
 
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            justify-content: flex-start;
-        }
+.result-group p:last-child {
+    margin-bottom: 0; /* Hapus margin bawah pada item terakhir */
+}
 
-        .checkbox-group input[type="checkbox"] {
-            margin-right: 10px;
-            width: 20px;
-            height: 20px;
-        }
+.result-group span {
+    font-weight: bold;
+    color: #28a745; /* Warna hijau untuk hasil angka */
+    text-align: right; /* Memastikan teks di dalam span itu sendiri rata kanan */
+    /* Flexbox sudah mendorongnya ke kanan, text-align ini untuk memastikan teks di dalam span itu sendiri rata kanan jika ada ruang */
+}
 
-        .checkbox-group label {
-            margin-bottom: 0;
-            font-weight: normal;
-            color: #333;
-        }
+.total-section {
+    margin-top: 40px;
+    padding: 25px;
+    background-color: #e6f7ff;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    text-align: center; /* Pusatkan konten di bagian ini */
+    max-width: 900px; /* Batasi lebar agar tidak terlalu lebar di layar besar */
+    margin-left: auto; /* Pusatkan total-section */
+    margin-right: auto; /* Pusatkan total-section */
+}
+.total-section h2 {
+    color: #007bff;
+    font-size: 26px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+.total-section p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    /* Jika Anda ingin teks dan angka di total-section juga rata kiri/kanan,
+       Anda perlu menerapkan flexbox pada .total-section p juga, seperti .result-group p.
+       Untuk saat ini, saya biarkan rata tengah sesuai text-align: center pada parent-nya. */
+    display: flex; /* Tambahkan ini */
+    justify-content: space-between; /* Tambahkan ini */
+    align-items: baseline; /* Tambahkan ini */
+    padding: 0 20px; /* Tambahkan padding agar tidak terlalu mepet tepi */
+}
+.total-section p:last-child {
+    margin-bottom: 0;
+}
+.total-section span {
+    color: #0056b3;
+    text-align: right; /* Tambahkan ini untuk angka */
+}
 
-        .result-group p {
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 10px;
-        }
-        .result-group span {
-            color: green;
-            text-align: right;
-        }
+.profile-link-below-summary {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #555;
+}
 
-        .total-section {
-            margin-top: 40px;
-            padding: 25px;
-            background-color: #e6f7ff;
-            border: 2px solid #007bff;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .total-section h2 {
-            color: #007bff;
-            font-size: 26px;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-        .total-section p {
-            font-size: 20px; /* Sedikit lebih kecil agar tidak terlalu besar */
-            font-weight: bold;
-            color: #333;
-            display: flex; /* Untuk memisahkan label dan nilai */
-            justify-content: space-between; /* Untuk meratakan kiri dan kanan */
-            align-items: baseline;
-            margin-bottom: 10px;
-            padding: 0 10px; /* Memberi sedikit padding horizontal */
-        }
-        .total-section span {
-            color: #0056b3;
-            text-align: right;
-        }
+.profile-link-below-summary a {
+    color: #007bff;
+    text-decoration: none;
+}
 
-        .profile-link-below-summary {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #555;
-        }
+.profile-link-below-summary a:hover {
+    text-decoration: underline;
+}
 
-        .profile-link-below-summary a {
-            color: #007bff;
-            text-decoration: none;
-        }
+/* Responsif design untuk layar kecil */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
 
-        .profile-link-below-summary a:hover {
-            text-decoration: underline;
-        }
+    .column {
+        min-width: unset;
+        width: 90%; /* Ambil lebih banyak lebar di layar kecil */
+        max-width: 500px;
+    }
 
-        /* Styling untuk video header */
-        .video-header {
-            text-align: center;
-            padding-top: 20px;
-            padding-bottom: 30px;
-            position: sticky;
-            top: 0;
-            background-color: #f4f4f4;
-            z-index: 10;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .video-header video {
-            max-width: 100%;
-            height: 3cm;
-            object-fit: cover;
-        }
-
-        /* Styling untuk Selisih Hasil di bawah kolom */
-        .difference-section {
-            width: fit-content; /* Sesuaikan lebar dengan konten */
-            margin: 40px auto; /* Pusatkan secara horizontal */
-            padding: 25px;
-            background-color: #fff3e0; /* Warna latar belakang yang berbeda */
-            border: 2px solid #ff9800; /* Border warna oranye */
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            max-width: 600px; /* Batasi lebar maksimum agar tidak terlalu lebar di layar besar */
-            text-align: left; /* Rata kiri untuk teks di dalam */
-        }
-
-        .difference-section h2 {
-            color: #ff9800;
-            font-size: 26px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center; /* Judul tetap di tengah */
-            border-bottom: 1px solid #ffe0b2;
-            padding-bottom: 10px;
-        }
-
-        .difference-section .result-group p {
-            font-size: 18px;
-            font-weight: bold;
-            color: #555;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .difference-section .result-group span {
-            color: #e65100; /* Warna oranye gelap untuk hasil */
-            text-align: right;
-        }
-    </style>
-</head>
-<body>
-    <div class="video-header">
-        <video autoplay loop muted>
-            <source src="Header Kalkulator.mp4" type="video/mp4">
-            Browser Anda tidak mendukung tag video.
-        </video>
-    </div>
-
-    <div class="container">
-        <div class="column">
-            <h2>Kalkulator Net</h2>
-
-            <div class="section">
-                <h3>Informasi Dasar</h3>
-                <div class="input-group">
-                    <label for="uangMasukRekening_col1">Uang yang diharapkan masuk ke Rekening Bank:</label>
-                    <input type="text" id="uangMasukRekening_col1" placeholder="Contoh: 10000000">
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-header">
-                    <h3>PPN</h3>
-                    <div class="input-group checkbox-group">
-                        <input type="checkbox" id="ppnApplicable_col1" checked>
-                        <label for="ppnApplicable_col1">Applicable</label>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="tarifPPN_col1">Pilih Tarif PPN:</label>
-                    <select id="tarifPPN_col1">
-                        <option value="">-- Pilih Tarif --</option>
-                        <option value="1.1">1.1%</option>
-                        <option value="11" selected>11%</option>
-                        <option value="12">12%</option>
-                    </select>
-                </div>
-                <div class="result-group">
-                    <p>Harga Jual: <span id="hargaJualSebelumPPN_col1">0</span></p>
-                    <p>PPN: <span id="besarPPN_col1">0</span></p>
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-header">
-                    <h3>PPh 21</h3>
-                    <div class="input-group checkbox-group">
-                        <input type="checkbox" id="pph21Applicable_col1">
-                        <label for="pph21Applicable_col1">Applicable</label>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="tarifPPh21_col1">Tarif PPh 21 (%):</label>
-                    <select id="tarifPPh21_col1">
-                        <option value="2.5" selected>5% x 50% (2.5%)</option>
-                        <option value="5">5%</option>
-                    </select>
-                </div>
-                <div class="result-group">
-                    <p>Dasar Pengenaan Pajak (PPh 21): <span id="dppPPh21_col1">0</span></p>
-                    <p>Besar PPh 21: <span id="besarPPh21_col1">0</span></p>
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-header">
-                    <h3>PPh 23</h3>
-                    <div class="input-group checkbox-group">
-                        <input type="checkbox" id="pph23Applicable_col1">
-                        <label for="pph23Applicable_col1">Applicable</label>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="tarifPPh23_col1">Tarif PPh 23 (%):</label>
-                    <input list="pph23TarifList_col1" id="tarifPPh23_col1" placeholder="Cari atau pilih tarif PPh 23" value="2% (Sewa dan Jasa Selain PPH Final)">
-                    <datalist id="pph23TarifList_col1">
-                        <option value="15% (Dividen)">
-                        <option value="15% (Bunga Selain yang Dikenakan PPh Pasal 4 ayat (2))">
-                        <option value="15% (Royalti)">
-                        <option value="15% (Hadiah, Penghargaan, Bonus dan Lainnya Selain yang Telah Dipotong PPh Pasal 21 Ayat (1) Huruf E UU PPh)">
-                        <option value="2% (Sewa dan Penghasilan Lain Sehubungan Dengan Penggunaan Harta Kecuali Sewa Tanah dan/atau Bangunan yang Telah Dikenai PPh Pasal 4 Ayat (2) UU PPh.)">
-                        <option value="2% (Jasa Teknik)">
-                        <option value="2% (Jasa Manajemen)">
-                        <option value="2% (Jasa Konsultan)">
-                        <option value="2% (Jasa Penilai (Appraisal))">
-                        <option value="2% (Jasa Aktuaris)">
-                        <option value="2% (Jasa Akuntansi, Pembukuan, dan Atestasi Laporan Keuangan)">
-                        <option value="2% (Jasa Hukum)">
-                        <option value="2% (Jasa Arsitektur)">
-                        <option value="2% (Jasa Perencanaan Kota dan Arsitektur Landscape;)">
-                        <option value="2% (Jasa Perancang (Design))">
-                        <option value="2% (Jasa Pengeboran (Drilling) di Bidang Penambangan Minyak dan Gas Bumi (Migas) Kecuali yang Dilakukan oleh Badan Usaha Tetap (BUT))">
-                        <option value="2% (Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas))">
-                        <option value="2% (Jasa Penambangan dan Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas))">
-                        <option value="2% (Jasa Penunjang di Bidang Penerbangan dan Bandar Udara)">
-                        <option value="2% (Jasa Penebangan Hutan)">
-                        <option value="2% (Jasa Pengolahan Limbah)">
-                        <option value="2% (Jasa Penyedia Tenaga Kerja dan/atau Tenaga Ahli (Outsourcing Services))">
-                        <option value="2% (Jasa Perantara dan/atau Keagenan)">
-                        <option value="2% (Jasa Bidang Perdagangan Surat-Surat Berharga, Kecuali yang Dilakukan Bursa Efek, Kustodian Sentral Efek Indonesia (KSEI) dan Kliring Penjaminan Efek Indonesia (KPEI))">
-                        <option value="2% (Jasa Kustodian/Penyimpanan/Penitipan, Kecuali yang Dilakukan Oleh KSEI)">
-                        <option value="2% (Jasa Pengisian Suara (Dubbing) dan/atau Sulih Suara)">
-                        <option value="2% (Jasa Mixing Film)">
-                        <option value="2% (Jasa Pembuatan Sarana Promosi Film, Iklan, Poster, Foto, Slide, Klise, Banner, Pamphlet, Baliho dan Folder)">
-                        <option value="2% (Jasa Sehubungan Dengan Software Atau Hardware Atau Sistem Komputer, Termasuk Perawatan, Pemeliharaan dan Perbaikan.)">
-                        <option value="2% (Jasa Pembuatan dan/atau Pengelolaan Website)">
-                        <option value="2% (Jasa Internet Termasuk Sambungannya)">
-                        <option value="2% (Jasa Penyimpanan, Pengolahan dan/atau Penyaluran Data, Informasi, dan/atau Program)">
-                        <option value="2% (Jasa Instalasi/Pemasangan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya Di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi;)">
-                        <option value="2% (Jasa Perawatan/Perbaikan/Pemeliharaan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi)">
-                        <option value="2% (Jasa Perawatan Kendaraan dan/atau Alat Transportasi Darat, Laut dan Udara)">
-                        <option value="2% (Jasa Maklon)">
-                        <option value="2% (Jasa Penyelidikan dan Keamanan)">
-                        <option value="2% (Jasa Penyelenggara Kegiatan Atau Event Organizer)">
-                        <option value="2% (Jasa Penyediaan Tempat dan/atau Waktu Dalam Media Massa, Media Luar Ruang Atau Media Lain Untuk Penyampaian Informasi, dan/atau Jasa Periklanan)">
-                        <option value="2% (Jasa Pembasmian Hama)">
-                        <option value="2% (Jasa Kebersihan Atau Cleaning Service)">
-                        <option value="2% (Jasa Sedot Septic Tank)">
-                        <option value="2% (Jasa Pemeliharaan Kolam)">
-                        <option value="2% (Jasa Katering Atau Tata Boga)">
-                        <option value="2% (Jasa Freight Forwarding)">
-                        <option value="2% (Jasa Logistik)">
-                        <option value="2% (Jasa Pengurusan Dokumen)">
-                        <option value="2% (Jasa Pengepakan)">
-                        <option value="2% (Jasa Loading dan Unloading)">
-                        <option value="2% (Jasa Laboratorium dan/atau Pengujian Kecuali yang Dilakukan oleh Lembaga atau Institusi Pendidikan Dalam Rangka Penelitian Akademis)">
-                        <option value="2% (Jasa Pengelolaan Parkir)">
-                        <option value="2% (Jasa Penyondiran Tanah)">
-                        <option value="2% (Jasa Penyiapan dan/atau Pengolahan Lahan)">
-                        <option value="2% (Jasa Pembibitan dan/atau Penanaman Bibit)">
-                        <option value="2% (Jasa Pemeliharaan Tanaman)">
-                        <option value="2% (Jasa Pemanenan)">
-                        <option value="2% (Jasa Pengolahan Hasil Pertanian, Perkebunan, Perikanan, Peternakan dan/atau Perhutanan)">
-                        <option value="2% (Jasa Dekorasi)">
-                        <option value="2% (Jasa Pencetakan/Penerbitan)">
-                        <option value="2% (Jasa Penerjemahan)">
-                        <option value="2% (Jasa Pengangkutan/Ekspedisi Kecuali Yang Telah Diatur Dalam Pasal 15 Undang-Undang Pajak Penghasilan)">
-                        <option value="2% (Jasa Pelayanan Pelabuhan)">
-                        <option value="2% (Jasa Pengangkutan Melalui Jalur Pipa)">
-                        <option value="2% (Jasa Pengelolaan Penitipan Anak)">
-                        <option value="2% (Jasa Pelatihan dan/atau Kursus)">
-                        <option value="2% (Jasa Pengiriman dan Pengisian Uang Ke Atm)">
-                        <option value="2% (Jasa Sertifikasi)">
-                        <option value="2% (Jasa Survey)">
-                        <option value="2% (Jasa Tester)">
-                        <option value="2% (Jasa Selain Jasa-Jasa Tersebut di Atas yang Pembayarannya Dibebankan pada APBN (Anggaran Pendapatan dan Belanja Negara) Atau APBD (Anggaran Pendapatan dan Belanja Daerah).)">
-                        <option value="2% (Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Token Oleh Penyelenggara Distribusi)">
-                        <option value="2% (Jasa Pemasaran dengan Media Voucer Oleh Penyelenggara Voucer)">
-                        <option value="2% (Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Voucer Oleh Penyelenggara Voucer dan Penyelenggara Distribusi)">
-                        <option value="2% (Jasa Penyelenggaraan Program Loyalitas dan Penghargaan Pelanggan (Consumer Loyalty/Reward Program) Oleh Penyelenggara Voucer)">
-                        <option value="0.00% (Bunga Pinjaman yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap Melalui Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi)">
-                    </datalist>
-                </div>
-                <div class="result-group">
-                    <p>Dasar Pengenaan Pajak (PPh 23): <span id="dppPPh23_col1">0</span></p>
-                    <p>Besar PPh 23: <span id="besarPPh23_col1">0</span></p>
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-header">
-                    <h3>PPh 4(2)</h3>
-                    <div class="input-group checkbox-group">
-                        <input type="checkbox" id="pph42Applicable_col1">
-                        <label for="pph42Applicable_col1">Applicable</label>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="tarifPPh42_col1">Tarif PPh 4(2) (%):</label>
-                    <select id="tarifPPh42_col1">
-                        <option value="0.5">0.5% (UMKM)</option>
-                        <option value="2.5">2.5% (Jasa Konstruksi - Pelaksana)</option>
-                        <option value="4">4% (Jasa Konstruksi - Perencana/Pengawas)</option>
-                        <option value="6">6% (Jasa Konstruksi - Konsultasi)</option>
-                        <option value="10" selected>10% (Sewa Tanah/Bangunan)</option>
-                        <option value="20">20% (Hadiah/Undian)</option>
-                    </select>
-                </div>
-                <div class="result-group">
-                    <p>Dasar Pengenaan Pajak (PPh 4(2)): <span id="dppPPh42_col1">0</span></p>
-                    <p>Besar PPh 4(2): <span id="besarPPh42_col1">0</span></p>
-                </div>
-            </div>
-
-            <div class="total-section">
-                <h2>Ringkasan Net</h2>
-                <p>Harga Jual: <span id="summaryHargaJual_col1">0</span></p>
-                <p>PPN: <span id="summaryBesarPPN_col1">0</span></p>
-                <p>PPH: <span id="totalPPhDipotong_col1">0</span></p>
-                <p>Uang Diterima: <span id="uangDiterima_col1">0</span></p>
-            </div>
-        </div>
-
-        <div class="column">
-            <h2>Kalkulator Gross</h2>
-
-            <div class="section">
-                <h3>Informasi Dasar</h3>
-                <div class="input-group">
-                    <label for="hargaJual_col2">Harga Jual yang disepakati:</label>
-                    <input type="text" id="hargaJual_col2" placeholder="Contoh: 10000000">
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-header">
-                    <h3>PPN</h3>
-                    <div class="input-group checkbox-group">
-                        <input type="checkbox" id="ppnApplicable_col2" checked>
-                        <label for="ppnApplicable_col2">Applicable</label>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="tarifPPN_col2">Pilih Tarif PPN:</label>
-                    <select id="tarifPPN_col2">
-                        <option value="">-- Pilih Tarif --</option>
-                        <option value="1.1">1.1%</option>
-                        <option value="11" selected>11%</option>
-                        <option value="12">12%</option>
-                    </select>
-                </div>
-                <div class="result-group">
-                    <p>Harga Jual: <span id="hargaJualSebelumPPN_col2">0</span></p>
-                    <p>PPN: <span id="besarPPN_col2">0</span></p>
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-header">
-                    <h3>PPh 21</h3>
-                    <div class="input-group checkbox-group">
-                        <input type="checkbox" id="pph21Applicable_col2">
-                        <label for="pph21Applicable_col2">Applicable</label>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="tarifPPh21_col2">Tarif PPh 21 (%):</label>
-                    <select id="tarifPPh21_col2">
-                        <option value="2.5" selected>5% x 50% (2.5%)</option>
-                        <option value="5">5%</option>
-                    </select>
-                </div>
-                <div class="result-group">
-                    <p>Dasar Pengenaan Pajak (PPh 21): <span id="dppPPh21_col2">0</span></p>
-                    <p>Besar PPh 21: <span id="besarPPh21_col2">0</span></p>
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-header">
-                    <h3>PPh 23</h3>
-                    <div class="input-group checkbox-group">
-                        <input type="checkbox" id="pph23Applicable_col2">
-                        <label for="pph23Applicable_col2">Applicable</label>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="tarifPPh23_col2">Tarif PPh 23 (%):</label>
-                    <input list="pph23TarifList_col2" id="tarifPPh23_col2" placeholder="Cari atau pilih tarif PPh 23" value="2% (Sewa dan Jasa Selain PPH Final)">
-                    <datalist id="pph23TarifList_col2">
-                        <option value="15% (Dividen)">
-                        <option value="15% (Bunga Selain yang Dikenakan PPh Pasal 4 ayat (2))">
-                        <option value="15% (Royalti)">
-                        <option value="15% (Hadiah, Penghargaan, Bonus dan Lainnya Selain yang Telah Dipotong PPh Pasal 21 Ayat (1) Huruf E UU PPh)">
-                        <option value="2% (Sewa dan Penghasilan Lain Sehubungan Dengan Penggunaan Harta Kecuali Sewa Tanah dan/atau Bangunan yang Telah Dikenai PPh Pasal 4 Ayat (2) UU PPh.)">
-                        <option value="2% (Jasa Teknik)">
-                        <option value="2% (Jasa Manajemen)">
-                        <option value="2% (Jasa Konsultan)">
-                        <option value="2% (Jasa Penilai (Appraisal))">
-                        <option value="2% (Jasa Aktuaris)">
-                        <option value="2% (Jasa Akuntansi, Pembukuan, dan Atestasi Laporan Keuangan)">
-                        <option value="2% (Jasa Hukum)">
-                        <option value="2% (Jasa Arsitektur)">
-                        <option value="2% (Jasa Perencanaan Kota dan Arsitektur Landscape;)">
-                        <option value="2% (Jasa Perancang (Design))">
-                        <option value="2% (Jasa Pengeboran (Drilling) di Bidang Penambangan Minyak dan Gas Bumi (Migas) Kecuali yang Dilakukan oleh Badan Usaha Tetap (BUT))">
-                        <option value="2% (Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas))">
-                        <option value="2% (Jasa Penambangan dan Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas))">
-                        <option value="2% (Jasa Penunjang di Bidang Penerbangan dan Bandar Udara)">
-                        <option value="2% (Jasa Penebangan Hutan)">
-                        <option value="2% (Jasa Pengolahan Limbah)">
-                        <option value="2% (Jasa Penyedia Tenaga Kerja dan/atau Tenaga Ahli (Outsourcing Services))">
-                        <option value="2% (Jasa Perantara dan/atau Keagenan)">
-                        <option value="2% (Jasa Bidang Perdagangan Surat-Surat Berharga, Kecuali yang Dilakukan Bursa Efek, Kustodian Sentral Efek Indonesia (KSEI) dan Kliring Penjaminan Efek Indonesia (KPEI))">
-                        <option value="2% (Jasa Kustodian/Penyimpanan/Penitipan, Kecuali yang Dilakukan Oleh KSEI)">
-                        <option value="2% (Jasa Pengisian Suara (Dubbing) dan/atau Sulih Suara)">
-                        <option value="2% (Jasa Mixing Film)">
-                        <option value="2% (Jasa Pembuatan Sarana Promosi Film, Iklan, Poster, Foto, Slide, Klise, Banner, Pamphlet, Baliho dan Folder)">
-                        <option value="2% (Jasa Sehubungan Dengan Software Atau Hardware Atau Sistem Komputer, Termasuk Perawatan, Pemeliharaan dan Perbaikan.)">
-                        <option value="2% (Jasa Pembuatan dan/atau Pengelolaan Website)">
-                        <option value="2% (Jasa Internet Termasuk Sambungannya)">
-                        <option value="2% (Jasa Penyimpanan, Pengolahan dan/atau Penyaluran Data, Informasi, dan/atau Program)">
-                        <option value="2% (Jasa Instalasi/Pemasangan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya Di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi;)">
-                        <option value="2% (Jasa Perawatan/Perbaikan/Pemeliharaan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi)">
-                        <option value="2% (Jasa Perawatan Kendaraan dan/atau Alat Transportasi Darat, Laut dan Udara)">
-                        <option value="2% (Jasa Maklon)">
-                        <option value="2% (Jasa Penyelidikan dan Keamanan)">
-                        <option value="2% (Jasa Penyelenggara Kegiatan Atau Event Organizer)">
-                        <option value="2% (Jasa Penyediaan Tempat dan/atau Waktu Dalam Media Massa, Media Luar Ruang Atau Media Lain Untuk Penyampaian Informasi, dan/atau Jasa Periklanan)">
-                        <option value="2% (Jasa Pembasmian Hama)">
-                        <option value="2% (Jasa Kebersihan Atau Cleaning Service)">
-                        <option value="2% (Jasa Sedot Septic Tank)">
-                        <option value="2% (Jasa Pemeliharaan Kolam)">
-                        <option value="2% (Jasa Katering Atau Tata Boga)">
-                        <option value="2% (Jasa Freight Forwarding)">
-                        <option value="2% (Jasa Logistik)">
-                        <option value="2% (Jasa Pengurusan Dokumen)">
-                        <option value="2% (Jasa Pengepakan)">
-                        <option value="2% (Jasa Loading dan Unloading)">
-                        <option value="2% (Jasa Laboratorium dan/atau Pengujian Kecuali yang Dilakukan oleh Lembaga atau Institusi Pendidikan Dalam Rangka Penelitian Akademis)">
-                        <option value="2% (Jasa Pengelolaan Parkir)">
-                        <option value="2% (Jasa Penyondiran Tanah)">
-                        <option value="2% (Jasa Penyiapan dan/atau Pengolahan Lahan)">
-                        <option value="2% (Jasa Pembibitan dan/atau Penanaman Bibit)">
-                        <option value="2% (Jasa Pemeliharaan Tanaman)">
-                        <option value="2% (Jasa Pemanenan)">
-                        <option value="2% (Jasa Pengolahan Hasil Pertanian, Perkebunan, Perikanan, Peternakan dan/atau Perhutanan)">
-                        <option value="2% (Jasa Dekorasi)">
-                        <option value="2% (Jasa Pencetakan/Penerbitan)">
-                        <option value="2% (Jasa Penerjemahan)">
-                        <option value="2% (Jasa Pengangkutan/Ekspedisi Kecuali Yang Telah Diatur Dalam Pasal 15 Undang-Undang Pajak Penghasilan)">
-                        <option value="2% (Jasa Pelayanan Pelabuhan)">
-                        <option value="2% (Jasa Pengangkutan Melalui Jalur Pipa)">
-                        <option value="2% (Jasa Pengelolaan Penitipan Anak)">
-                        <option value="2% (Jasa Pelatihan dan/atau Kursus)">
-                        <option value="2% (Jasa Pengiriman dan Pengisian Uang Ke Atm)">
-                        <option value="2% (Jasa Sertifikasi)">
-                        <option value="2% (Jasa Survey)">
-                        <option value="2% (Jasa Tester)">
-                        <option value="2% (Jasa Selain Jasa-Jasa Tersebut di Atas yang Pembayarannya Dibebankan pada APBN (Anggaran Pendapatan dan Belanja Negara) Atau APBD (Anggaran Pendapatan dan Belanja Daerah).)">
-                        <option value="2% (Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Token Oleh Penyelenggara Distribusi)">
-                        <option value="2% (Jasa Pemasaran dengan Media Voucer Oleh Penyelenggara Voucer)">
-                        <option value="2% (Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Voucer Oleh Penyelenggara Voucer dan Penyelenggara Distribusi)">
-                        <option value="2% (Jasa Penyelenggaraan Program Loyalitas dan Penghargaan Pelanggan (Consumer Loyalty/Reward Program) Oleh Penyelenggara Voucer)">
-                        <option value="0.00% (Bunga Pinjaman yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap Melalui Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi)">
-                    </datalist>
-                </div>
-                <div class="result-group">
-                    <p>Dasar Pengenaan Pajak (PPh 23): <span id="dppPPh23_col2">0</span></p>
-                    <p>Besar PPh 23: <span id="besarPPh23_col2">0</span></p>
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-header">
-                    <h3>PPh 4(2)</h3>
-                    <div class="input-group checkbox-group">
-                        <input type="checkbox" id="pph42Applicable_col2">
-                        <label for="pph42Applicable_col2">Applicable</label>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="tarifPPh42_col2">Tarif PPh 4(2) (%):</label>
-                    <select id="tarifPPh42_col2">
-                        <option value="0.5">0.5% (UMKM)</option>
-                        <option value="2.5">2.5% (Jasa Konstruksi - Pelaksana)</option>
-                        <option value="4">4% (Jasa Konstruksi - Perencana/Pengawas)</option>
-                        <option value="6">6% (Jasa Konstruksi - Konsultasi)</option>
-                        <option value="10" selected>10% (Sewa Tanah/Bangunan)</option>
-                        <option value="20">20% (Hadiah/Undian)</option>
-                    </select>
-                </div>
-                <div class="result-group">
-                    <p>Dasar Pengenaan Pajak (PPh 4(2)): <span id="dppPPh42_col2">0</span></p>
-                    <p>Besar PPh 4(2): <span id="besarPPh42_col2">0</span></p>
-                </div>
-            </div>
-
-            <div class="total-section">
-                <h2>Ringkasan Gross</h2>
-                <p>Harga Jual: <span id="summaryHargaJual_col2">0</span></p>
-                <p>PPN: <span id="summaryBesarPPN_col2">0</span></p>
-                <p>PPH: <span id="totalPPhDipotong_col2">0</span></p>
-                <p>Uang Diterima: <span id="uangDiterima_col2">0</span></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="difference-section">
-        <h2>Selisih Hasil</h2>
-        <div class="result-group">
-            <p>Selisih Harga Jual: <span id="diffHargaJual">0</span></p>
-            <p>Selisih PPN: <span id="diffBesarPPN">0</span></p>
-            <p>Selisih PPH: <span id="diffTotalPPH">0</span></p>
-            <p>Selisih Uang Diterima: <span id="diffUangDiterima">0</span></p>
-        </div>
-    </div>
-
-    <div class="profile-link-below-summary">
-        <p>Dibuat oleh: <a href="https://www.linkedin.com/in/arief-indrawan" target="_blank">Arief Indrawan</a></p>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+    .total-section p {
+        padding: 0 10px; /* Sesuaikan padding untuk layar kecil */
+    }
+}
