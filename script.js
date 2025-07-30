@@ -26,6 +26,16 @@ function cleanInput(inputString) {
     return parseFloat(cleaned) || 0; // Konversi ke float, kembalikan 0 jika NaN
 }
 
+// Fungsi untuk mengekstrak persentase dari string "X% (Deskripsi)"
+function getPercentageFromDatalistValue(valueString) {
+    const match = valueString.match(/^(\d+(\.\d+)?)%/);
+    if (match && match[1]) {
+        return parseFloat(match[1]);
+    }
+    return 0; // Kembalikan 0 jika tidak ada persentase yang cocok ditemukan
+}
+
+
 // =========================================================
 // Logika Perhitungan untuk Kalkulator Net (Kolom 1)
 // =========================================================
@@ -39,7 +49,9 @@ function calculateNet(inputAmount, columnSuffix) {
     const tarifPPh21_decimal = tarifPPh21_raw / 100;
 
     const pph23Applicable = document.getElementById(`pph23Applicable_${columnSuffix}`).checked;
-    const tarifPPh23_raw = pph23Applicable ? parseFloat(document.getElementById(`tarifPPh23_${columnSuffix}`).value) : 0;
+    // Perubahan di sini untuk mendapatkan nilai dari input datalist PPh 23
+    const tarifPPh23_input = document.getElementById(`tarifPPh23_${columnSuffix}`).value;
+    const tarifPPh23_raw = pph23Applicable ? getPercentageFromDatalistValue(tarifPPh23_input) : 0;
     const tarifPPh23_decimal = tarifPPh23_raw / 100;
 
     const pph42Applicable = document.getElementById(`pph42Applicable_${columnSuffix}`).checked;
@@ -150,7 +162,9 @@ function calculateGross(inputHargaJual, columnSuffix) {
     const tarifPPh21_decimal = tarifPPh21_raw / 100;
 
     const pph23Applicable = document.getElementById(`pph23Applicable_${columnSuffix}`).checked;
-    const tarifPPh23_raw = pph23Applicable ? parseFloat(document.getElementById(`tarifPPh23_${columnSuffix}`).value) : 0;
+    // Perubahan di sini untuk mendapatkan nilai dari input datalist PPh 23
+    const tarifPPh23_input = document.getElementById(`tarifPPh23_${columnSuffix}`).value;
+    const tarifPPh23_raw = pph23Applicable ? getPercentageFromDatalistValue(tarifPPh23_input) : 0;
     const tarifPPh23_decimal = tarifPPh23_raw / 100;
 
     const pph42Applicable = document.getElementById(`pph42Applicable_${columnSuffix}`).checked;
@@ -335,20 +349,27 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // Event listeners untuk dropdown tarif pajak
-        const tarifSelects = [
+        // Event listeners untuk dropdown/input tarif pajak
+        const tarifInputs = [
             document.getElementById(`tarifPPN_${columnSuffix}`),
             document.getElementById(`tarifPPh21_${columnSuffix}`),
-            document.getElementById(`tarifPPh23_${columnSuffix}`),
+            document.getElementById(`tarifPPh23_${columnSuffix}`), // Ini sekarang input text dengan datalist
             document.getElementById(`tarifPPh42_${columnSuffix}`)
         ];
 
-        tarifSelects.forEach(select => {
-            if (select) {
-                select.addEventListener('change', () => {
+        tarifInputs.forEach(input => {
+            if (input) {
+                // Gunakan 'input' event untuk input text, dan 'change' untuk select
+                input.addEventListener('input', () => { // Gunakan 'input' untuk deteksi ketikan langsung
                     calculateFunction();
                     hitungSelisih();
                 });
+                if (input.tagName === 'SELECT') { // Tambahkan 'change' juga untuk select
+                    input.addEventListener('change', () => {
+                        calculateFunction();
+                        hitungSelisih();
+                    });
+                }
             }
         });
 
