@@ -1,70 +1,112 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #f0f2f5;
     color: #333;
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
+.video-header {
     text-align: center;
-    color: #007bff;
-    margin-bottom: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: sticky;
+    top: 0;
+    background-color: #f4f4f4;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
 }
+
+.video-header video {
+    max-width: 100%;
+    height: 3cm;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
 
 .container {
-    display: flex; /* Menggunakan flexbox untuk layout kolom */
-    justify-content: center; /* Pusatkan kolom di tengah */
-    flex-wrap: wrap; /* Agar kolom bisa wrap di layar kecil */
-    gap: 20px; /* Jarak antar kolom */
+    display: flex;
+    justify-content: center;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .column {
-    flex: 1; /* Kolom akan mengambil ruang yang tersedia secara merata */
-    min-width: 300px; /* Lebar minimum untuk setiap kolom */
-    max-width: 450px; /* Lebar maksimum untuk setiap kolom */
-    border: 1px solid #e0e0e0;
-    padding: 20px;
+    background-color: #fff;
     border-radius: 8px;
-    background-color: #fff; /* Latar belakang kolom putih */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sedikit bayangan */
-    margin-bottom: 20px; /* Tambahkan margin bawah untuk setiap kolom */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    max-width: 900px;
+    width: 100%;
 }
 
-.column h2 {
-    color: #0056b3;
+.full-width {
+    grid-column: span 2;
+}
+
+h2 {
+    color: #4CAF50;
+    text-align: center;
     margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 22px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-    text-align: center; /* Pusatkan judul kolom */
 }
 
-/* Bagian .section, .section-header, .input-group, .checkbox-group, dll.
-   Jika Anda tidak menggunakan form atau bagian input, Anda bisa menghapusnya dari CSS Anda.
-   Saya tetap menyertakannya di sini karena Anda memberikannya sebelumnya.
-*/
 .section {
-    border: 1px solid #e0e0e0;
-    padding: 20px;
+    background-color: #fff;
+    padding: 15px;
     border-radius: 8px;
-    margin-top: 30px;
-    background-color: #fcfcfc;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 
 .section-header h3 {
-    color: #0056b3;
     margin: 0;
-    font-size: 18px;
+    color: #555;
+    font-size: 1.2em;
+}
+
+.tax-calculators-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.details {
+    flex: 1;
+    min-width: 300px;
+    border: 1px solid #4CAF50;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #e8f5e9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.details h4 {
+    margin-top: 0;
+    color: #388e3c;
+    border-bottom: 1px solid #a5d6a7;
+    padding-bottom: 10px;
+}
+
+.details.view-gross {
+    background-color: #e0e0e0;
+    border: 1px solid #9e9e9e;
+}
+
+.details.view-gross h4 {
+    color: #616161;
+    border-bottom: 1px solid #bdbdbd;
 }
 
 .input-group {
@@ -79,130 +121,139 @@ h1 {
 
 .input-group input[type="text"],
 .input-group select {
-    width: calc(100% - 20px); /* Kurangi padding untuk lebar penuh */
+    width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 20px;
-    background-color: white;
+    box-sizing: border-box;
+    font-size: 1em;
 }
 
-.checkbox-group {
+.input-group.checkbox-group {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
-    justify-content: flex-start;
 }
 
-.checkbox-group input[type="checkbox"] {
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
+.input-group.checkbox-group input {
+    width: auto;
+    margin-right: 8px;
 }
 
-.checkbox-group label {
-    margin-bottom: 0;
-    font-weight: normal;
-    color: #333;
-    cursor: pointer;
+.tax-details-hidden {
+    display: none;
 }
-
 
 .result-group {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e6ffe6; /* Latar belakang hijau muda untuk hasil */
-    border: 1px solid #ccebcc;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f5f5f5;
     border-radius: 4px;
+    border-left: 4px solid #4CAF50;
+}
+
+.result-group.view-gross {
+    border-left: 4px solid #9e9e9e;
 }
 
 .result-group p {
-    display: flex; /* Menggunakan flexbox untuk mengatur teks dan angka di satu baris */
-    justify-content: space-between; /* Mendorong label ke kiri, angka ke kanan */
-    align-items: baseline; /* Menjaga teks dan angka tetap sejajar pada garis dasar */
-    margin-bottom: 5px; /* Jarak antar baris hasil */
-    font-size: 1.1em;
-}
-
-.result-group p:last-child {
-    margin-bottom: 0; /* Hapus margin bawah pada item terakhir */
+    margin: 5px 0;
+    font-size: 0.9em;
 }
 
 .result-group span {
     font-weight: bold;
-    color: #28a745; /* Warna hijau untuk hasil angka */
-    text-align: right; /* Memastikan teks di dalam span itu sendiri rata kanan */
-    /* Flexbox sudah mendorongnya ke kanan, text-align ini untuk memastikan teks di dalam span itu sendiri rata kanan jika ada ruang */
+    color: #000;
+}
+
+/* New CSS for result titles */
+.result-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #4CAF50;
+    margin: 0 0 10px 0;
+    border-bottom: 1px solid #a5d6a7;
+    padding-bottom: 5px;
+}
+
+.details.view-gross .result-title {
+    color: #616161;
+    border-bottom: 1px solid #bdbdbd;
 }
 
 .total-section {
-    margin-top: 40px;
-    padding: 25px;
-    background-color: #e6f7ff;
-    border: 2px solid #007bff;
+    background-color: #fff;
+    padding: 20px;
     border-radius: 8px;
-    text-align: center; /* Pusatkan konten di bagian ini */
-    max-width: 900px; /* Batasi lebar agar tidak terlalu lebar di layar besar */
-    margin-left: auto; /* Pusatkan total-section */
-    margin-right: auto; /* Pusatkan total-section */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: center;
 }
-.total-section h2 {
-    color: #007bff;
-    font-size: 26px;
+
+.summary-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.summary-container > div {
+    flex: 1;
+    border: 2px solid #4CAF50;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: left;
+    background-color: #e8f5e9;
+}
+
+.summary-container > div#summary-gross {
+    border: 2px solid #9e9e9e;
+    background-color: #e0e0e0;
+}
+
+.summary-container h3 {
     margin-top: 0;
-    margin-bottom: 15px;
+    border-bottom: 2px solid #a5d6a7;
+    padding-bottom: 10px;
+    color: #388e3c;
+    text-align: center;
 }
-.total-section p {
-    font-size: 24px;
+
+.summary-container #summary-gross h3 {
+    color: #616161;
+    border-bottom-color: #bdbdbd;
+}
+
+.summary-container p {
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+.summary-container span {
     font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-    /* Jika Anda ingin teks dan angka di total-section juga rata kiri/kanan,
-       Anda perlu menerapkan flexbox pada .total-section p juga, seperti .result-group p.
-       Untuk saat ini, saya biarkan rata tengah sesuai text-align: center pada parent-nya. */
-    display: flex; /* Tambahkan ini */
-    justify-content: space-between; /* Tambahkan ini */
-    align-items: baseline; /* Tambahkan ini */
-    padding: 0 20px; /* Tambahkan padding agar tidak terlalu mepet tepi */
-}
-.total-section p:last-child {
-    margin-bottom: 0;
-}
-.total-section span {
-    color: #0056b3;
-    text-align: right; /* Tambahkan ini untuk angka */
+    color: #000;
+    float: right;
 }
 
 .profile-link-below-summary {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 20px;
     font-size: 0.9em;
-    color: #555;
+    color: #666;
 }
 
 .profile-link-below-summary a {
-    color: #007bff;
+    color: #4CAF50;
     text-decoration: none;
+    font-weight: bold;
 }
 
-.profile-link-below-summary a:hover {
-    text-decoration: underline;
-}
-
-/* Responsif design untuk layar kecil */
 @media (max-width: 768px) {
-    .container {
+    .tax-calculators-container {
         flex-direction: column;
-        align-items: center;
     }
 
-    .column {
+    .details {
         min-width: unset;
-        width: 90%; /* Ambil lebih banyak lebar di layar kecil */
-        max-width: 500px;
     }
 
-    .total-section p {
-        padding: 0 10px; /* Sesuaikan padding untuk layar kecil */
-    }
+
 }

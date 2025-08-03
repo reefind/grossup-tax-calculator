@@ -1,61 +1,242 @@
-// Fungsi utilitas untuk memformat angka ke rupiah
-function formatRupiah(angka) {
-    if (isNaN(angka) || !isFinite(angka)) {
-        return 'Rp 0'; // Mengembalikan Rp 0 jika angka tidak valid
-    }
-    const fixedAngka = Math.round(angka); // Bulatkan angka untuk menghindari desimal yang tidak perlu di rupiah
+// =========================================================
+// DATA TARIF PAJAK
+// =========================================================
+const pph21Data = [
+    { id: '50', text: 'Tenaga Ahli: Pengacara, Akuntan, Arsitek, Dokter, Konsultan, Notaris, PPAT, Penilai, Aktuaris' },
+    { id: '50', text: 'Penasihat, Pengajar, Pelatih, Penceramah, Penyuluh, dan Moderator' },
+    { id: '50', text: 'Pengarang, Peneliti, Penerjemah' },
+    { id: '50', text: 'Pemberi Jasa dalam Segala Bidang' },
+    { id: '50', text: 'Agen Iklan' },
+    { id: '50', text: 'Pengawas atau Pengelola Proyek' },
+    { id: '50', text: 'Pembawa Pesanan, Pencari Langganan, Perantara' },
+    { id: '50', text: 'Petugas Penjaja Barang Dagangan' },
+    { id: '50', text: 'Agen Asuransi' },
+    { id: '50', text: 'Distributor Pemasaran Berjenjang atau Penjualan Langsung' },
+    { id: '50', text: 'Upah Pegawai Tidak Tetap > Rp2.500.000 Sehari' },
+    { id: '50', text: 'Upah Pegawai Tidak Tetap > Rp2.500.000 Sehari (Fasilitas Daerah Tertentu)' },
+    { id: '100', text: 'Uang Manfaat Pensiun yang diambil sebagian' },
+    { id: '100', text: 'Imbalan kepada Peserta Perlombaan' },
+    { id: '100', text: 'Imbalan kepada Peserta Rapat, Seminar, Lokakarya, dll' },
+    { id: '100', text: 'Imbalan kepada Peserta atau Anggota Kepanitiaan' },
+    { id: '100', text: 'Imbalan kepada Peserta Pendidikan, Pelatihan, dan Magang' },
+    { id: '100', text: 'Imbalan kepada Peserta Kegiatan Lainnya)' },
+    { id: '100', text: 'Uang Pesangon, Uang Manfaat Pensiun, THT, JHT (Tahun Ketiga dst)' },
+    { id: '50', text: 'Pemain Musik, Penyanyi, Pelawak, Bintang Film, Seniman, Influencer, dll' },
+    { id: '50', text: 'Imbalan yang Diterima oleh Olahragawan' }
+];
 
-    let rupiah = '';
-    const angkarev = fixedAngka.toString().split('').reverse().join('');
-    for (let i = 0; i < angkarev.length; i++) {
-        if (i % 3 === 0) {
-            rupiah += angkarev.substr(i, 3) + '.';
-        }
-    }
-    // Hapus titik di akhir jika ada, dan kembalikan format yang benar
-    return 'Rp ' + rupiah.split('', rupiah.length - 1).reverse().join('');
+const pph23Data = [
+    { id: '15% (Dividen)', text: '15% - Dividen' },
+    { id: '15% (Bunga Selain yang Dikenakan PPh Pasal 4 ayat (2))', text: '15% - Bunga Selain yang Dikenakan PPh Pasal 4 ayat (2)' },
+    { id: '15% (Royalti)', text: '15% - Royalti' },
+    { id: '15% (Hadiah, Penghargaan, Bonus dan Lainnya Selain yang Telah Dipotong PPh Pasal 21 Ayat (1) Huruf E UU PPh)', text: '15% - Hadiah, Penghargaan, Bonus dan Lainnya Selain yang Telah Dipotong PPh Pasal 21 Ayat (1) Huruf E UU PPh' },
+    { id: '2% (Sewa dan Penghasilan Lain Sehubungan Dengan Penggunaan Harta Kecuali Sewa Tanah dan/atau Bangunan yang Telah Dikenai PPh Pasal 4 Ayat (2) UU PPh.)', text: '2% - Sewa dan Penghasilan Lain Sehubungan Dengan Penggunaan Harta Kecuali Sewa Tanah dan/atau Bangunan yang Telah Dikenai PPh Pasal 4 Ayat (2) UU PPh.' },
+    { id: '2% (Jasa Teknik)', text: '2% - Jasa Teknik' },
+    { id: '2% (Jasa Manajemen)', text: '2% - Jasa Manajemen' },
+    { id: '2% (Jasa Konsultan)', text: '2% - Jasa Konsultan' },
+    { id: '2% (Jasa Penilai (Appraisal))', text: '2% - Jasa Penilai (Appraisal)' },
+    { id: '2% (Jasa Aktuaris)', text: '2% - Jasa Aktuaris' },
+    { id: '2% (Jasa Akuntansi, Pembukuan, dan Atestasi Laporan Keuangan)', text: '2% - Jasa Akuntansi, Pembukuan, dan Atestasi Laporan Keuangan' },
+    { id: '2% (Jasa Hukum)', text: '2% - Jasa Hukum' },
+    { id: '2% (Jasa Arsitektur)', text: '2% - Jasa Arsitektur' },
+    { id: '2% (Jasa Perencanaan Kota dan Arsitektur Landscape;)', text: '2% - Jasa Perencanaan Kota dan Arsitektur Landscape;' },
+    { id: '2% (Jasa Perancang (Design))', text: '2% - Jasa Perancang (Design)' },
+    { id: '2% (Jasa Pengeboran (Drilling) di Bidang Penambangan Minyak dan Gas Bumi (Migas) Kecuali yang Dilakukan oleh Badan Usaha Tetap (BUT))', text: '2% - Jasa Pengeboran (Drilling) di Bidang Penambangan Minyak dan Gas Bumi (Migas) Kecuali yang Dilakukan oleh Badan Usaha Tetap (BUT)' },
+    { id: '2% (Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas))', text: '2% - Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas)' },
+    { id: '2% (Jasa Penambangan dan Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas))', text: '2% - Jasa Penambangan dan Jasa Penunjang di Bidang Usaha Panas Bumi dan Penambangan Minyak dan Gas Bumi (Migas)' },
+    { id: '2% (Jasa Penunjang di Bidang Penerbangan dan Bandar Udara)', text: '2% - Jasa Penunjang di Bidang Penerbangan dan Bandar Udara' },
+    { id: '2% (Jasa Penebangan Hutan)', text: '2% - Jasa Penebangan Hutan' },
+    { id: '2% (Jasa Pengolahan Limbah)', text: '2% - Jasa Pengolahan Limbah' },
+    { id: '2% (Jasa Penyedia Tenaga Kerja dan/atau Tenaga Ahli (Outsourcing Services))', text: '2% - Jasa Penyedia Tenaga Kerja dan/atau Tenaga Ahli (Outsourcing Services)' },
+    { id: '2% (Jasa Perantara dan/atau Keagenan)', text: '2% - Jasa Perantara dan/atau Keagenan' },
+    { id: '2% (Jasa Bidang Perdagangan Surat-Surat Berharga, Kecuali yang Dilakukan Bursa Efek, Kustodian Sentral Efek Indonesia (KSEI) dan Kliring Penjaminan Efek Indonesia (KPEI))', text: '2% - Jasa Bidang Perdagangan Surat-Surat Berharga, Kecuali yang Dilakukan Bursa Efek, Kustodian Sentral Efek Indonesia (KSEI) dan Kliring Penjaminan Efek Indonesia (KPEI)' },
+    { id: '2% (Jasa Kustodian/Penyimpanan/Penitipan, Kecuali yang Dilakukan Oleh KSEI)', text: '2% - Jasa Kustodian/Penyimpanan/Penitipan, Kecuali yang Dilakukan Oleh KSEI' },
+    { id: '2% (Jasa Pengisian Suara (Dubbing) dan/atau Sulih Suara)', text: '2% - Jasa Pengisian Suara (Dubbing) dan/atau Sulih Suara' },
+    { id: '2% (Jasa Mixing Film)', text: '2% - Jasa Mixing Film' },
+    { id: '2% (Jasa Pembuatan Sarana Promosi Film, Iklan, Poster, Foto, Slide, Klise, Banner, Pamphlet, Baliho dan Folder)', text: '2% - Jasa Pembuatan Sarana Promosi Film, Iklan, Poster, Foto, Slide, Klise, Banner, Pamphlet, Baliho dan Folder' },
+    { id: '2% (Jasa Sehubungan Dengan Software Atau Hardware Atau Sistem Komputer, Termasuk Perawatan, Pemeliharaan dan Perbaikan.)', text: '2% - Jasa Sehubungan Dengan Software Atau Hardware Atau Sistem Komputer, Termasuk Perawatan, Pemeliharaan dan Perbaikan.' },
+    { id: '2% (Jasa Pembuatan dan/atau Pengelolaan Website)', text: '2% - Jasa Pembuatan dan/atau Pengelolaan Website' },
+    { id: '2% (Jasa Internet Termasuk Sambungannya)', text: '2% - Jasa Internet Termasuk Sambungannya' },
+    { id: '2% (Jasa Penyimpanan, Pengolahan dan/atau Penyaluran Data, Informasi, dan/atau Program)', text: '2% - Jasa Penyimpanan, Pengolahan dan/atau Penyaluran Data, Informasi, dan/atau Program' },
+    { id: '2% (Jasa Instalasi/Pemasangan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya Di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi;)', text: '2% - Jasa Instalasi/Pemasangan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya Di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi;' },
+    { id: '2% (Jasa Perawatan/Perbaikan/Pemeliharaan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi)', text: '2% - Jasa Perawatan/Perbaikan/Pemeliharaan Mesin, Peralatan, Listrik, Telepon, Air, Gas, Ac dan/atau Tv Kabel, Selain Yang Dilakukan Oleh Wajib Pajak Yang Ruang Lingkupnya di Bidang Konstruksi dan Mempunyai Izin dan/atau Sertifikasi Sebagai Pengusaha Konstruksi' },
+    { id: '2% (Jasa Perawatan Kendaraan dan/atau Alat Transportasi Darat, Laut dan Udara)', text: '2% - Jasa Perawatan Kendaraan dan/atau Alat Transportasi Darat, Laut dan Udara' },
+    { id: '2% (Jasa Maklon)', text: '2% - Jasa Maklon' },
+    { id: '2% (Jasa Penyelidikan dan Keamanan)', text: '2% - Jasa Penyelidikan dan Keamanan' },
+    { id: '2% (Jasa Penyelenggara Kegiatan Atau Event Organizer)', text: '2% - Jasa Penyelenggara Kegiatan Atau Event Organizer' },
+    { id: '2% (Jasa Penyediaan Tempat dan/atau Waktu Dalam Media Massa, Media Luar Ruang Atau Media Lain Untuk Penyampaian Informasi, dan/atau Jasa Periklanan)', text: '2% - Jasa Penyediaan Tempat dan/atau Waktu Dalam Media Massa, Media Luar Ruang Atau Media Lain Untuk Penyampaian Informasi, dan/atau Jasa Periklanan' },
+    { id: '2% (Jasa Pembasmian Hama)', text: '2% - Jasa Pembasmian Hama' },
+    { id: '2% (Jasa Kebersihan Atau Cleaning Service)', text: '2% - Jasa Kebersihan Atau Cleaning Service' },
+    { id: '2% (Jasa Sedot Septic Tank)', text: '2% - Jasa Sedot Septic Tank' },
+    { id: '2% (Jasa Pemeliharaan Kolam)', text: '2% - Jasa Pemeliharaan Kolam' },
+    { id: '2% (Jasa Katering Atau Tata Boga)', text: '2% - Jasa Katering Atau Tata Boga' },
+    { id: '2% (Jasa Freight Forwarding)', text: '2% - Jasa Freight Forwarding' },
+    { id: '2% (Jasa Logistik)', text: '2% - Jasa Logistik' },
+    { id: '2% (Jasa Pengurusan Dokumen)', text: '2% - Jasa Pengurusan Dokumen' },
+    { id: '2% (Jasa Pengepakan)', text: '2% - Jasa Pengepakan' },
+    { id: '2% (Jasa Loading dan Unloading)', text: '2% - Jasa Loading dan Unloading' },
+    { id: '2% (Jasa Laboratorium dan/atau Pengujian Kecuali yang Dilakukan oleh Lembaga atau Institusi Pendidikan Dalam Rangka Penelitian Akademis)', text: '2% - Jasa Laboratorium dan/atau Pengujian Kecuali yang Dilakukan oleh Lembaga atau Institusi Pendidikan Dalam Rangka Penelitian Akademis' },
+    { id: '2% (Jasa Pengelolaan Parkir)', text: '2% - Jasa Pengelolaan Parkir' },
+    { id: '2% (Jasa Penyondiran Tanah)', text: '2% - Jasa Penyondiran Tanah' },
+    { id: '2% (Jasa Penyiapan dan/atau Pengolahan Lahan)', text: '2% - Jasa Penyiapan dan/atau Pengolahan Lahan' },
+    { id: '2% (Jasa Pembibitan dan/atau Penanaman Bibit)', text: '2% - Jasa Pembibitan dan/atau Penanaman Bibit' },
+    { id: '2% (Jasa Pemeliharaan Tanaman)', text: '2% - Jasa Pemeliharaan Tanaman' },
+    { id: '2% (Jasa Pemanenan)', text: '2% - Jasa Pemanenan' },
+    { id: '2% (Jasa Pengolahan Hasil Pertanian, Perkebunan, Perikanan, Peternakan dan/atau Perhutanan)', text: '2% - Jasa Pengolahan Hasil Pertanian, Perkebunan, Perikanan, Peternakan dan/atau Perhutanan' },
+    { id: '2% (Jasa Dekorasi)', text: '2% - Jasa Dekorasi' },
+    { id: '2% (Jasa Pencetakan/Penerbitan)', text: '2% - Jasa Pencetakan/Penerbitan' },
+    { id: '2% (Jasa Penerjemahan)', text: '2% - Jasa Penerjemahan' },
+    { id: '2% (Jasa Pengangkutan/Ekspedisi Kecuali Yang Telah Diatur Dalam Pasal 15 Undang-Undang Pajak Penghasilan)', text: '2% - Jasa Pengangkutan/Ekspedisi Kecuali Yang Telah Diatur Dalam Pasal 15 Undang-Undang Pajak Penghasilan' },
+    { id: '2% (Jasa Pelayanan Pelabuhan)', text: '2% - Jasa Pelayanan Pelabuhan' },
+    { id: '2% (Jasa Pengangkutan Melalui Jalur Pipa)', text: '2% - Jasa Pengangkutan Melalui Jalur Pipa' },
+    { id: '2% (Jasa Pengelolaan Penitipan Anak)', text: '2% - Jasa Pengelolaan Penitipan Anak' },
+    { id: '2% (Jasa Pelatihan dan/atau Kursus)', text: '2% - Jasa Pelatihan dan/atau Kursus' },
+    { id: '2% (Jasa Pengiriman dan Pengisian Uang Ke Atm)', text: '2% - Jasa Pengiriman dan Pengisian Uang Ke Atm' },
+    { id: '2% (Jasa Sertifikasi)', text: '2% - Jasa Sertifikasi' },
+    { id: '2% (Jasa Survey)', text: '2% - Jasa Survey' },
+    { id: '2% (Jasa Tester)', text: '2% - Jasa Tester' },
+    { id: '2% (Jasa Selain Jasa-Jasa Tersebut di Atas yang Pembayarannya Dibebankan pada APBN (Anggaran Pendapatan dan Belanja Negara) Atau APBD (Anggaran Pendapatan dan Belanja Daerah).)', text: '2% - Jasa Selain Jasa-Jasa Tersebut di Atas yang Pembayarannya Dibebankan pada APBN (Anggaran Pendapatan dan Belanja Negara) Atau APBD (Anggaran Pendapatan dan Belanja Daerah).' },
+    { id: '2% (Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Token Oleh Penyelenggara Distribusi)', text: '2% - Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Token Oleh Penyelenggara Distribusi' },
+    { id: '2% (Jasa Pemasaran dengan Media Voucer Oleh Penyelenggara Voucer)', text: '2% - Jasa Pemasaran dengan Media Voucer Oleh Penyelenggara Voucer' },
+    { id: '2% (Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Voucer Oleh Penyelenggara Voucer dan Penyelenggara Distribusi)', text: '2% - Jasa Penyelenggaraan Layanan Transaksi Pembayaran Terkait dengan Distribusi Voucer Oleh Penyelenggara Voucer dan Penyelenggara Distribusi' },
+    { id: '2% (Jasa Penyelenggaraan Program Loyalitas dan Penghargaan Pelanggan (Consumer Loyalty/Reward Program) Oleh Penyelenggara Voucer)', text: '2% - Jasa Penyelenggaraan Program Loyalitas dan Penghargaan Pelanggan (Consumer Loyalty/Reward Program) Oleh Penyelenggara Voucer' },
+    { id: '0.00% (Bunga Pinjaman yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap Melalui Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi)', text: '0.00% (Bunga Pinjaman yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap Melalui Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi' }
+];
+
+const pph42Data = [
+    { id: '20', text: '20% - Bunga Tabungan dan Bunga Deposito yang Ditempatkan di Dalam Negeri yang Dananya Bersumber Selain dari Devisa Hasil Ekspor (DHE)' },
+    { id: '8', text: '8% - Bunga Deposito yang Ditempatkan di Dalam Negeri (mata uang IDR bersumber dari DHE tenor 1 bulan)' },
+    { id: '5', text: '5% - Bunga Deposito yang Ditempatkan di Dalam Negeri (mata uang IDR bersumber dari DHE tenor 3 bulan)' },
+    { id: '0', text: '0% - Bunga Deposito yang Ditempatkan di Dalam Negeri (mata uang IDR bersumber dari DHE tenor 6 bulan atau lebih)' },
+    { id: '10', text: '10% - Bunga Deposito yang Ditempatkan di Dalam Negeri (mata uang USD bersumber dari DHE tenor 1 bulan)' },
+    { id: '8', text: '8% - Bunga Deposito yang Ditempatkan di Dalam Negeri (mata uang USD bersumber dari DHE tenor 3 bulan)' },
+    { id: '3', text: '3% - Bunga Deposito yang Ditempatkan di Dalam Negeri (mata uang USD bersumber dari DHE tenor 6 bulan)' },
+    { id: '0', text: '0% - Bunga Deposito yang Ditempatkan di Dalam Negeri (mata uang USD bersumber dari DHE tenor lebih 6 bulan)' },
+    { id: '20', text: '20% - Bunga Deposito/Tabungan yang Ditempatkan di Luar Negeri Melalui Bank yang Didirikan atau Bertempat Kedudukan di Indonesia atau Cabang Bank Luar Negeri di Indonesia' },
+    { id: '20', text: '20% - Diskonto Sertifikat Bank Indonesia' },
+    { id: '20', text: '20% - Jasa Giro' },
+    { id: '15', text: '15% - Bunga Obligasi, Surat Utang Negara, atau Obligasi Daerah yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap.' },
+    { id: '10', text: '10% - Bunga Obligasi yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap' },
+    { id: '10', text: '10% - Bunga Obligasi yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap yang diadministrasikan oleh BI' },
+    { id: '20', text: '20% - Diskonto Surat Perbendaharaan Negara yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap' },
+    { id: '20', text: '20% - Diskonto Surat Perbendaharaan Negara yang Diterima Wajib Pajak Penduduk/Berkedudukan di Luar Negeri' },
+    { id: '1', text: '1% - Transaksi Penjualan Saham di Bursa Efek (Saham Pendiri)' },
+    { id: '0', text: '0% - Transaksi Penjualan Saham di Bursa Efek (Bukan Saham Pendiri)' },
+    { id: '0', text: '0% - Transaksi Penjualan Saham Milik Perusahaan Modal Ventura Tidak di Bursa Efek' },
+    { id: '10', text: '10% - Persewaan Tanah dan/atau Bangunan' },
+    { id: '25', text: '25% - Hadiah Undian' },
+    { id: '2', text: '2% - Pekerjaan Konstruksi yang Dilakukan oleh Penyedia Jasa yang Memiliki Sertifikat Badan Usaha Kualifikasi Kecil atau Sertifikat Kompetensi Kerja untuk Usaha Orang Perseorangan' },
+    { id: '4', text: '4% - Pekerjaan Konstruksi yang Dilakukan oleh Penyedia Jasa yang Tidak Memiliki Sertifikat Badan Usaha Atau Sertifikat Kompetensi Kerja untuk Usaha Orang Perseorangan' },
+    { id: '3', text: '3% - Pekerjaan Konstruksi yang Dilakukan oleh Penyedia Jasa yang Memiliki Sertifikat Selain Sertifikat Badan Usaha Kualifikasi Kecil atau Sertifikat Kompetensi Kerja untuk Usaha Orang Perseorangan' },
+    { id: '3', text: '3% - Pekerjaan Konstruksi Terintegrasi yang Dilakukan oleh Penyedia Jasa yang Memiliki Sertifikat Badan Usaha' },
+    { id: '4', text: '4% - Pekerjaan Konstruksi Terintegrasi yang Dilakukan oleh Penyedia Jasa yang Tidak Memiliki Sertifikat Badan Usaha' },
+    { id: '4', text: '4% - Jasa Konsultansi Konstruksi yang Dilakukan oleh Penyedia Jasa yang Memiliki Sertifikat Badan Usaha atau Sertifikat Kompetensi Kerja untuk Usaha Orang Perseorangan' },
+    { id: '6', text: '6% - Jasa Konsultansi Konstruksi yang Dilakukan oleh Penyedia Jasa yang Tidak Memiliki Sertifikat Badan Usaha atau Sertifikat Kompetensi Kerja untuk Usaha Orang Perseorangan' },
+    { id: '4', text: '4% - Jasa Konstruksi Berupa Jasa Perencanaan Konstruksi (Dengan Kualifikasi Usaha)' },
+    { id: '6', text: '6% - Jasa Konstruksi Berupa Jasa Perencanaan Konstruksi (Tanpa Kualifikasi Usaha)' },
+    { id: '2', text: '2% - Jasa Konstruksi Berupa Jasa Pelaksanaan Konstruksi (Kualifikasi Usaha Kecil)' },
+    { id: '3', text: '3% - Jasa Konstruksi Berupa Jasa Pelaksanaan Konstruksi (Kualifikasi Usaha Menengah dan Besar)' },
+    { id: '4', text: '4% - Jasa Konstruksi Berupa Jasa Pelaksanaan Konstruksi (Tanpa Kualifikasi Usaha)' },
+    { id: '4', text: '4% - Jasa Konstruksi Berupa Jasa Pengawasan Konstruksi (Dengan Kualifikasi Usaha)' },
+    { id: '6', text: '6% - Jasa Konstruksi Berupa Jasa Pengawasan Konstruksi (Tanpa Kualifikasi Usaha)' },
+    { id: '0', text: '0% - Bunga Simpanan yang Dibayarkan oleh Koperasi kepada Anggota Wajib Pajak Orang Pribadi (bunga sampai dengan Rp240.000,00)' },
+    { id: '10', text: '10% - Bunga Simpanan yang Dibayarkan oleh Koperasi kepada Anggota Wajib Pajak Orang Pribadi (bunga di atas Rp240.000,00)' },
+    { id: '10', text: '10% - Dividen yang Diterima/Diperoleh Wajib Pajak Orang Pribadi Dalam Negeri' },
+    { id: '1', text: '1% - Pemotongan atau pemungutan PPh atas penjualan barang atau penyerahan jasa yang dilakukan oleh Wajib Pajak dengan peredaran bruto tertentu sesuai dengan Peraturan Pemerintah Nomor 23 Tahun 2018 atau Peraturan Pemerintah Nomor 55 Tahun 2022.' },
+    { id: '0', text: '0% - Pemotongan atau pemungutan PPh atas transaksi pembelian yang dilakukan oleh Wajib Pajak dengan peredaran bruto tertentu sesuai dengan Peraturan Pemerintah Nomor 55 Tahun 2022.' },
+    { id: '1', text: '1% - Imbalan yang Dibayarkan/Terutang kepada Perusahaan Pelayaran Dalam Negeri' },
+    { id: '3', text: '3% - Imbalan Charter Kapal Laut dan/atau Pesawat Udara yang Dibayarkan/ Terutang kepada Perusahaan Pelayaran dan/atau Penerbangan Luar Negeri melalui BUT di Indonesia' },
+    { id: '20', text: '20% - Uplift Hulu Migas' },
+    { id: '5', text: '5% - Participating Interest Eksplorasi Hulu Migas' },
+    { id: '7', text: '7% - Participating Interest Eksploitasi Hulu Migas' },
+    { id: '8', text: '8% - Penghasilan yang Diterima atau Diperoleh Sehubungan dengan Kerja Sama dengan Lembaga Pengelola Investasi (LPI)' },
+    { id: '3', text: '3% - Pengalihan Hak atas Tanah dan/atau Bangunan' },
+    { id: '1', text: '1% - Pengalihan Rumah Sederhana dan Rumah Susun Sederhana yang Dilakukan oleh WP yang Usaha Pokoknya Mengalihkan Hak atas Tanah dan/atau Bangunan' },
+    { id: '0', text: '0% - Pengalihan Hak atas Tanah dan/atau Bangunan kepada Pemerintah, BUMN yang Mendapat Penugasan Khusus dari Pemerintah, atau BUMD yang Mendapat Penugasan Khusus dari Kepala Daerah, sesuai UU mengenai Pengadaan Tanah bagi Pembangunan untuk Kepentingan Umum' },
+    { id: '1', text: '1% - Imbalan yang Diterima/Diperoleh Sehubungan dengan Pengangkutan Orang dan/atau Barang Termasuk Penyewaan Kapal Laut Oleh Perusahaan Pelayaran Dalam Negeri' },
+    { id: '3', text: '3% - Imbalan yang Dibayarkan/Terutang kepada Perusahaan Pelayaran dan/atau Penerbangan Luar Negeri Sehubungan dengan Pengangkutan Orang dan/atau Barang (Selain Berdasarkan Perjanjian Charter)' },
+    { id: '0', text: '0% - Penghasilan Wajib Pajak Luar Negeri yang Mempunyai Kantor Perwakilan Dagang di Indonesia' },
+    { id: '2', text: '2% - Penghasilan Wajib Pajak yang Melakukan Kegiatan Usaha Jasa Maklon (Contract Manufacturing) Internasional di Bidang Produksi Mainan Anak-Anak' },
+    { id: '1', text: '1% - Pemotongan atau Pemungutan PPh atas transaksi penjualan barang atau penyerahan jasa yang dilakukan oleh Wajib Pajak orang pribadi yang memiliki peredaran bruto tertentu sesuai dengan PP 55 Tahun 2022 dengan peredaran usaha s.d Rp500.000.000,00.' },
+    { id: '0', text: '0% - Pemotongan atau Pemungutan PPh atas transaksi penjualan barang atau penyerahan jasa yang dilakukan oleh Wajib Pajak yang memenuhi persyaratan tertentu untuk dikenai PPh yang bersifat final dengan tarif 0% di IKN (PPh UMKM di IKN).' },
+    { id: '0', text: '0% - Pemotongan atau pemungutan PPh atas transaksi pembelian yang dilakukan oleh Wajib Pajak yang memanfaatkan fasilitas PPh final dengan tarif 0% di IKN (PPh UMKM di IKN).' }
+];
+
+// =========================================================
+// FUNGSI UTILITAS
+// =========================================================
+function formatRupiah(number) {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
+    }).format(number);
 }
 
-// Fungsi untuk membersihkan input (menghapus format rupiah, titik, dan koma)
-function cleanInput(inputString) {
-    if (typeof inputString !== 'string') {
-        return inputString; // Kembalikan langsung jika bukan string (misal sudah number)
-    }
-    // Hapus semua karakter non-digit kecuali tanda minus di awal
-    const cleaned = inputString.replace(/[^0-9-]/g, '');
-    return parseFloat(cleaned) || 0; // Konversi ke float, kembalikan 0 jika NaN
+function cleanInput(value) {
+    return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
 }
 
-// Fungsi untuk mengekstrak persentase dari string "X% (Deskripsi)"
-function getPercentageFromDatalistValue(valueString) {
-    const match = valueString.match(/^(\d+(\.\d+)?)%/);
-    if (match && match[1]) {
-        return parseFloat(match[1]);
+function getPercentageFromValue(value) {
+    if (value.includes('x 200%')) {
+        return parseFloat(value.replace(/% x 200%$/, '')) * 2;
     }
-    return 0; // Kembalikan 0 jika tidak ada persentase yang cocok ditemukan
+    return parseFloat(value.replace(/%$/, '')) || 0;
+}
+
+// =========================================================
+// FUNGSI PENGHITUNGAN TARIF PROGRESIF PPH 21 (PS17)
+// =========================================================
+function calculatePS17Tax(dpp) {
+    if (dpp <= 0) {
+        return 0;
+    } else if (dpp <= 60000000) {
+        return dpp * 0.05;
+    } else if (dpp <= 250000000) {
+        return (dpp * 0.15) - 6000000;
+    } else if (dpp <= 500000000) {
+        return (dpp * 0.25) - 31000000;
+    } else if (dpp <= 5000000000) {
+        return (dpp * 0.30) - 56000000;
+    } else {
+        return (dpp * 0.35) - 306000000;
+    }
 }
 
 
 // =========================================================
-// Logika Perhitungan untuk Kalkulator Net (Kolom 1)
+// FUNGSI UNTUK MENAMPILKAN/MENYEMBUNYIKAN DETAIL PAJAK
 // =========================================================
-function calculateNet(inputAmount, columnSuffix) {
-    const ppnApplicable = document.getElementById(`ppnApplicable_${columnSuffix}`).checked;
-    const tarifPPN_raw = ppnApplicable ? parseFloat(document.getElementById(`tarifPPN_${columnSuffix}`).value) : 0;
+function toggleDetails(checkboxId) {
+    const isChecked = document.getElementById(checkboxId).checked;
+    const detailsContainer = document.getElementById(checkboxId.replace('Terapkan', '-details-container'));
+    const resultsContainer = document.getElementById(checkboxId.replace('Terapkan', '-results-container'));
+
+    if (detailsContainer) detailsContainer.style.display = isChecked ? 'block' : 'none';
+    if (resultsContainer) resultsContainer.style.display = isChecked ? 'flex' : 'none';
+}
+
+
+// =========================================================
+// Logika Perhitungan untuk Kalkulator Net (Satu Kolom)
+// =========================================================
+function calculateNet() {
+    const inputAmount = cleanInput(document.getElementById('uangMasukRekening').value);
+
+    const ppnTerapkan = document.getElementById('ppnTerapkan').checked;
+    const tarifPPN_raw = ppnTerapkan ? parseFloat(document.getElementById('tarifPPN').value) : 0;
     const tarifPPN_decimal = tarifPPN_raw / 100;
 
-    const pph21Applicable = document.getElementById(`pph21Applicable_${columnSuffix}`).checked;
-    const tarifPPh21_raw = pph21Applicable ? parseFloat(document.getElementById(`tarifPPh21_${columnSuffix}`).value) : 0;
-    const tarifPPh21_decimal = tarifPPh21_raw / 100;
+    const pph21Terapkan = document.getElementById('pph21Terapkan').checked;
+    const pph21_dpp_percentage = pph21Terapkan ? parseFloat(document.getElementById('tarifPPh21').value) : 0;
 
-    const pph23Applicable = document.getElementById(`pph23Applicable_${columnSuffix}`).checked;
-    // Perubahan di sini untuk mendapatkan nilai dari input datalist PPh 23
-    const tarifPPh23_input = document.getElementById(`tarifPPh23_${columnSuffix}`).value;
-    const tarifPPh23_raw = pph23Applicable ? getPercentageFromDatalistValue(tarifPPh23_input) : 0;
+    const pph23Terapkan = document.getElementById('pph23Terapkan').checked;
+    const tarifPPh23_input = pph23Terapkan ? document.getElementById('tarifPPh23').value : "0%";
+    const tarifPPh23_raw = getPercentageFromValue(tarifPPh23_input);
     const tarifPPh23_decimal = tarifPPh23_raw / 100;
 
-    const pph42Applicable = document.getElementById(`pph42Applicable_${columnSuffix}`).checked;
-    const tarifPPh42_raw = pph42Applicable ? parseFloat(document.getElementById(`tarifPPh42_${columnSuffix}`).value) : 0;
+    const pph42Terapkan = document.getElementById('pph42Terapkan').checked;
+    const tarifPPh42_raw = pph42Terapkan ? parseFloat(document.getElementById('tarifPPh42').value) : 0;
     const tarifPPh42_decimal = tarifPPh42_raw / 100;
 
     let hargaJualSebelumPPN = 0;
@@ -69,106 +250,124 @@ function calculateNet(inputAmount, columnSuffix) {
     let besarPPh42 = 0;
     let uangDiterimaFinal = 0;
 
-    if (inputAmount === 0) {
-        // Reset tampilan jika input 0
-        document.getElementById(`hargaJualSebelumPPN_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`besarPPN_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`dppPPh21_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`besarPPh21_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`dppPPh23_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`besarPPh23_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`dppPPh42_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`besarPPh42_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`summaryHargaJual_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`summaryBesarPPN_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`totalPPhDipotong_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`uangDiterima_${columnSuffix}`).textContent = formatRupiah(0);
-        
-        return {
-            hargaJual: 0,
-            besarPPN: 0,
-            totalPPhDipotong: 0,
-            uangDiterima: 0
-        };
+    if (inputAmount <= 0) {
+        document.getElementById('hargaJualSebelumPPN_net').textContent = formatRupiah(0);
+        document.getElementById('besarPPN_net').textContent = formatRupiah(0);
+        document.getElementById('dppPPh21_net').textContent = formatRupiah(0);
+        document.getElementById('besarPPh21_net').textContent = formatRupiah(0);
+        document.getElementById('dppPPh23_net').textContent = formatRupiah(0);
+        document.getElementById('besarPPh23_net').textContent = formatRupiah(0);
+        document.getElementById('dppPPh42_net').textContent = formatRupiah(0);
+        document.getElementById('besarPPh42_net').textContent = formatRupiah(0);
+        document.getElementById('summaryHargaJual_net').textContent = formatRupiah(0);
+        document.getElementById('summaryBesarPPN_net').textContent = formatRupiah(0);
+        document.getElementById('totalPPhDipotong_net').textContent = formatRupiah(0);
+        document.getElementById('uangDiterima_net').textContent = formatRupiah(0);
+        return;
     }
 
-    const totalEffectiveTaxRate = tarifPPN_decimal - tarifPPh21_decimal - tarifPPh23_decimal - tarifPPh42_decimal;
-    const denominator = 1 + totalEffectiveTaxRate;
-    
-    if (denominator === 0) {
-        hargaJualSebelumPPN = Infinity; 
-    } else {
-        hargaJualSebelumPPN = inputAmount / denominator;
-    }
-    if (isNaN(hargaJualSebelumPPN) || !isFinite(hargaJualSebelumPPN)) hargaJualSebelumPPN = 0;
+    let guessHargaJual = inputAmount * 1.05;
+    const maxIterations = 100;
+    const tolerance = 0.5;
 
-    besarPPN = hargaJualSebelumPPN * tarifPPN_decimal;
+    for (let i = 0; i < maxIterations; i++) {
+        hargaJualSebelumPPN = guessHargaJual;
+        besarPPN = hargaJualSebelumPPN * tarifPPN_decimal;
 
-    if (pph21Applicable) {
-        dppPPh21 = hargaJualSebelumPPN;
-        if (tarifPPh21_raw === 2.5) { 
-            dppPPh21 = hargaJualSebelumPPN * 0.5; 
-            besarPPh21 = dppPPh21 * (5 / 100); 
-        } else { 
-            besarPPh21 = dppPPh21 * tarifPPh21_decimal; 
+        besarPPh21 = 0;
+        dppPPh21 = 0;
+        if (pph21Terapkan) {
+            dppPPh21 = hargaJualSebelumPPN * (pph21_dpp_percentage / 100);
+            besarPPh21 = calculatePS17Tax(dppPPh21);
         }
+
+        besarPPh23 = 0;
+        dppPPh23 = 0;
+        if (pph23Terapkan) {
+            dppPPh23 = hargaJualSebelumPPN;
+            besarPPh23 = dppPPh23 * tarifPPh23_decimal;
+        }
+
+        besarPPh42 = 0;
+        dppPPh42 = 0;
+        if (pph42Terapkan) {
+            dppPPh42 = hargaJualSebelumPPN;
+            besarPPh42 = dppPPh42 * tarifPPh42_decimal;
+        }
+
+        totalPPhDipotong = besarPPh21 + besarPPh23 + besarPPh42;
+        uangDiterimaFinal = hargaJualSebelumPPN + besarPPN - totalPPhDipotong;
+
+        const diff = inputAmount - uangDiterimaFinal;
+        if (Math.abs(diff) <= tolerance) {
+            break;
+        }
+        guessHargaJual += diff;
     }
-    if (pph23Applicable) {
+
+    hargaJualSebelumPPN = Math.round(hargaJualSebelumPPN);
+    besarPPN = Math.round(hargaJualSebelumPPN * tarifPPN_decimal);
+
+    besarPPh21 = 0;
+    dppPPh21 = 0;
+    if (pph21Terapkan) {
+        dppPPh21 = Math.round(hargaJualSebelumPPN * (pph21_dpp_percentage / 100));
+        besarPPh21 = Math.round(calculatePS17Tax(dppPPh21));
+    }
+
+    besarPPh23 = 0;
+    dppPPh23 = 0;
+    if (pph23Terapkan) {
         dppPPh23 = hargaJualSebelumPPN;
-        besarPPh23 = dppPPh23 * tarifPPh23_decimal;
+        besarPPh23 = Math.round(dppPPh23 * tarifPPh23_decimal);
     }
-    if (pph42Applicable) {
+
+    besarPPh42 = 0;
+    dppPPh42 = 0;
+    if (pph42Terapkan) {
         dppPPh42 = hargaJualSebelumPPN;
-        besarPPh42 = dppPPh42 * tarifPPh42_decimal;
+        besarPPh42 = Math.round(dppPPh42 * tarifPPh42_decimal);
     }
 
-    totalPPhDipotong = besarPPh21 + besarPPh23 + besarPPh42;
+    totalPPhDipotong = Math.round(besarPPh21 + besarPPh23 + besarPPh42);
+    uangDiterimaFinal = Math.round(hargaJualSebelumPPN + besarPPN - totalPPhDipotong);
 
-    uangDiterimaFinal = hargaJualSebelumPPN + besarPPN - totalPPhDipotong;
+    document.getElementById('hargaJualSebelumPPN_net').textContent = formatRupiah(hargaJualSebelumPPN);
+    document.getElementById('besarPPN_net').textContent = formatRupiah(besarPPN);
+    document.getElementById('dppPPh21_net').textContent = formatRupiah(dppPPh21);
+    document.getElementById('besarPPh21_net').textContent = formatRupiah(besarPPh21);
+    document.getElementById('dppPPh23_net').textContent = formatRupiah(dppPPh23);
+    document.getElementById('besarPPh23_net').textContent = formatRupiah(besarPPh23);
+    document.getElementById('dppPPh42_net').textContent = formatRupiah(dppPPh42);
+    document.getElementById('besarPPh42_net').textContent = formatRupiah(besarPPh42);
 
-    // Update UI
-    document.getElementById(`hargaJualSebelumPPN_${columnSuffix}`).textContent = formatRupiah(hargaJualSebelumPPN);
-    document.getElementById(`besarPPN_${columnSuffix}`).textContent = formatRupiah(besarPPN);
-    document.getElementById(`dppPPh21_${columnSuffix}`).textContent = formatRupiah(dppPPh21);
-    document.getElementById(`besarPPh21_${columnSuffix}`).textContent = formatRupiah(besarPPh21);
-    document.getElementById(`dppPPh23_${columnSuffix}`).textContent = formatRupiah(dppPPh23);
-    document.getElementById(`besarPPh23_${columnSuffix}`).textContent = formatRupiah(besarPPh23);
-    document.getElementById(`dppPPh42_${columnSuffix}`).textContent = formatRupiah(dppPPh42);
-    document.getElementById(`besarPPh42_${columnSuffix}`).textContent = formatRupiah(besarPPh42);
-
-    document.getElementById(`summaryHargaJual_${columnSuffix}`).textContent = formatRupiah(hargaJualSebelumPPN);
-    document.getElementById(`summaryBesarPPN_${columnSuffix}`).textContent = formatRupiah(besarPPN);
-    document.getElementById(`totalPPhDipotong_${columnSuffix}`).textContent = formatRupiah(totalPPhDipotong);
-    document.getElementById(`uangDiterima_${columnSuffix}`).textContent = formatRupiah(uangDiterimaFinal);
-
-    return {
-        hargaJual: hargaJualSebelumPPN,
-        besarPPN: besarPPN,
-        totalPPhDipotong: totalPPhDipotong,
-        uangDiterima: uangDiterimaFinal
-    };
+    document.getElementById('summaryHargaJual_net').textContent = formatRupiah(hargaJualSebelumPPN);
+    document.getElementById('summaryBesarPPN_net').textContent = formatRupiah(besarPPN);
+    document.getElementById('totalPPhDipotong_net').textContent = formatRupiah(totalPPhDipotong);
+    document.getElementById('uangDiterima_net').textContent = formatRupiah(uangDiterimaFinal);
 }
 
+
 // =========================================================
-// Logika Perhitungan untuk Kalkulator Gross (Kolom 2)
+// Logika Perhitungan untuk Kalkulator Gross (Satu Kolom)
 // =========================================================
-function calculateGross(inputHargaJual, columnSuffix) {
-    const ppnApplicable = document.getElementById(`ppnApplicable_${columnSuffix}`).checked;
-    const tarifPPN_raw = ppnApplicable ? parseFloat(document.getElementById(`tarifPPN_${columnSuffix}`).value) : 0;
+function calculateGross() {
+    const inputHargaJual = cleanInput(document.getElementById('hargaJual').value);
+
+    const ppnTerapkan = document.getElementById('ppnTerapkan').checked;
+    const tarifPPN_raw = ppnTerapkan ? parseFloat(document.getElementById('tarifPPN').value) : 0;
     const tarifPPN_decimal = tarifPPN_raw / 100;
 
-    const pph21Applicable = document.getElementById(`pph21Applicable_${columnSuffix}`).checked;
-    const tarifPPh21_raw = pph21Applicable ? parseFloat(document.getElementById(`tarifPPh21_${columnSuffix}`).value) : 0;
-    const tarifPPh21_decimal = tarifPPh21_raw / 100;
+    const pph21Terapkan = document.getElementById('pph21Terapkan').checked;
+    const pph21_dpp_percentage = pph21Terapkan ? parseFloat(document.getElementById('tarifPPh21').value) : 0;
 
-    const pph23Applicable = document.getElementById(`pph23Applicable_${columnSuffix}`).checked;
-    // Perubahan di sini untuk mendapatkan nilai dari input datalist PPh 23
-    const tarifPPh23_input = document.getElementById(`tarifPPh23_${columnSuffix}`).value;
-    const tarifPPh23_raw = pph23Applicable ? getPercentageFromDatalistValue(tarifPPh23_input) : 0;
+    const pph23Terapkan = document.getElementById('pph23Terapkan').checked;
+    const tarifPPh23_input = pph23Terapkan ? document.getElementById('tarifPPh23').value : "0%";
+    const tarifPPh23_raw = getPercentageFromValue(tarifPPh23_input);
     const tarifPPh23_decimal = tarifPPh23_raw / 100;
 
-    const pph42Applicable = document.getElementById(`pph42Applicable_${columnSuffix}`).checked;
-    const tarifPPh42_raw = pph42Applicable ? parseFloat(document.getElementById(`tarifPPh42_${columnSuffix}`).value) : 0;
+    const pph42Terapkan = document.getElementById('pph42Terapkan').checked;
+    const tarifPPh42_raw = pph42Terapkan ? parseFloat(document.getElementById('tarifPPh42').value) : 0;
     const tarifPPh42_decimal = tarifPPh42_raw / 100;
 
     let hargaJual = inputHargaJual;
@@ -180,261 +379,128 @@ function calculateGross(inputHargaJual, columnSuffix) {
     let besarPPh23 = 0;
     let dppPPh42 = 0;
     let besarPPh42 = 0;
-    let uangDiterima = 0;
+    let uangDiterimaFinal = 0;
 
-    if (hargaJual === 0) {
-        // Reset tampilan jika input 0
-        document.getElementById(`hargaJualSebelumPPN_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`besarPPN_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`dppPPh21_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`besarPPh21_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`dppPPh23_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`besarPPh23_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`dppPPh42_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`besarPPh42_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`summaryHargaJual_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`summaryBesarPPN_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`totalPPhDipotong_${columnSuffix}`).textContent = formatRupiah(0);
-        document.getElementById(`uangDiterima_${columnSuffix}`).textContent = formatRupiah(0);
-        return {
-            hargaJual: 0,
-            besarPPN: 0,
-            totalPPhDipotong: 0,
-            uangDiterima: 0
-        };
+    if (hargaJual <= 0) {
+        document.getElementById('hargaJualSebelumPPN_gross').textContent = formatRupiah(0);
+        document.getElementById('besarPPN_gross').textContent = formatRupiah(0);
+        document.getElementById('dppPPh21_gross').textContent = formatRupiah(0);
+        document.getElementById('besarPPh21_gross').textContent = formatRupiah(0);
+        document.getElementById('dppPPh23_gross').textContent = formatRupiah(0);
+        document.getElementById('besarPPh23_gross').textContent = formatRupiah(0);
+        document.getElementById('dppPPh42_gross').textContent = formatRupiah(0);
+        document.getElementById('besarPPh42_gross').textContent = formatRupiah(0);
+        document.getElementById('summaryHargaJual_gross').textContent = formatRupiah(0);
+        document.getElementById('summaryBesarPPN_gross').textContent = formatRupiah(0);
+        document.getElementById('totalPPhDipotong_gross').textContent = formatRupiah(0);
+        document.getElementById('uangDiterima_gross').textContent = formatRupiah(0);
+        return;
     }
 
-    besarPPN = hargaJual * tarifPPN_decimal;
-
-    if (pph21Applicable) {
-        dppPPh21 = hargaJual;
-        if (tarifPPh21_raw === 2.5) { 
-            dppPPh21 = hargaJual * 0.5; 
-            besarPPh21 = dppPPh21 * (5 / 100); 
-        } else { 
-            besarPPh21 = dppPPh21 * tarifPPh21_decimal; 
-        }
+    if (ppnTerapkan) {
+        besarPPN = hargaJual * tarifPPN_decimal;
     }
 
-    if (pph23Applicable) {
+    if (pph21Terapkan) {
+        dppPPh21 = hargaJual * (pph21_dpp_percentage / 100);
+        besarPPh21 = calculatePS17Tax(dppPPh21);
+    }
+
+    if (pph23Terapkan) {
         dppPPh23 = hargaJual;
         besarPPh23 = dppPPh23 * tarifPPh23_decimal;
     }
 
-    if (pph42Applicable) {
+    if (pph42Terapkan) {
         dppPPh42 = hargaJual;
         besarPPh42 = dppPPh42 * tarifPPh42_decimal;
     }
 
     totalPPhDipotong = besarPPh21 + besarPPh23 + besarPPh42;
+    uangDiterimaFinal = hargaJual + besarPPN - totalPPhDipotong;
 
-    uangDiterima = hargaJual + besarPPN - totalPPhDipotong;
+    document.getElementById('hargaJualSebelumPPN_gross').textContent = formatRupiah(hargaJual);
+    document.getElementById('besarPPN_gross').textContent = formatRupiah(Math.round(besarPPN));
+    document.getElementById('dppPPh21_gross').textContent = formatRupiah(Math.round(dppPPh21));
+    document.getElementById('besarPPh21_gross').textContent = formatRupiah(Math.round(besarPPh21));
+    document.getElementById('dppPPh23_gross').textContent = formatRupiah(Math.round(dppPPh23));
+    document.getElementById('besarPPh23_gross').textContent = formatRupiah(Math.round(besarPPh23));
+    document.getElementById('dppPPh42_gross').textContent = formatRupiah(Math.round(dppPPh42));
+    document.getElementById('besarPPh42_gross').textContent = formatRupiah(Math.round(besarPPh42));
 
-    // Update UI Kolom 2
-    document.getElementById(`hargaJualSebelumPPN_${columnSuffix}`).textContent = formatRupiah(hargaJual);
-    document.getElementById(`besarPPN_${columnSuffix}`).textContent = formatRupiah(besarPPN);
-    document.getElementById(`dppPPh21_${columnSuffix}`).textContent = formatRupiah(dppPPh21);
-    document.getElementById(`besarPPh21_${columnSuffix}`).textContent = formatRupiah(besarPPh21);
-    document.getElementById(`dppPPh23_${columnSuffix}`).textContent = formatRupiah(dppPPh23);
-    document.getElementById(`besarPPh23_${columnSuffix}`).textContent = formatRupiah(besarPPh23);
-    document.getElementById(`dppPPh42_${columnSuffix}`).textContent = formatRupiah(dppPPh42);
-    document.getElementById(`besarPPh42_${columnSuffix}`).textContent = formatRupiah(besarPPh42);
-
-    document.getElementById(`summaryHargaJual_${columnSuffix}`).textContent = formatRupiah(hargaJual);
-    document.getElementById(`summaryBesarPPN_${columnSuffix}`).textContent = formatRupiah(besarPPN);
-    document.getElementById(`totalPPhDipotong_${columnSuffix}`).textContent = formatRupiah(totalPPhDipotong);
-    document.getElementById(`uangDiterima_${columnSuffix}`).textContent = formatRupiah(uangDiterima);
-
-    return {
-        hargaJual: hargaJual,
-        besarPPN: besarPPN,
-        totalPPhDipotong: totalPPhDipotong,
-        uangDiterima: uangDiterima
-    };
+    document.getElementById('summaryHargaJual_gross').textContent = formatRupiah(hargaJual);
+    document.getElementById('summaryBesarPPN_gross').textContent = formatRupiah(Math.round(besarPPN));
+    document.getElementById('totalPPhDipotong_gross').textContent = formatRupiah(Math.round(totalPPhDipotong));
+    document.getElementById('uangDiterima_gross').textContent = formatRupiah(Math.round(uangDiterimaFinal));
 }
 
-// =========================================================
-// Fungsi Wrapper untuk Kolom 1
-// =========================================================
-function hitungPajakKolom1() {
-    const uangMasukRekening = cleanInput(document.getElementById('uangMasukRekening_col1') ? document.getElementById('uangMasukRekening_col1').value : 0);
-    calculateNet(uangMasukRekening, 'col1');
-}
 
 // =========================================================
-// Fungsi Wrapper untuk Kolom 2
+// EVENT LISTENERS DAN INISIALISASI
 // =========================================================
-function hitungPajakKolom2() {
-    const hargaJualInput = cleanInput(document.getElementById('hargaJual_col2') ? document.getElementById('hargaJual_col2').value : 0);
-    calculateGross(hargaJualInput, 'col2');
-}
-
-// =========================================================
-// Logika untuk Kolom 3: Selisih
-// =========================================================
-function hitungSelisih() {
-    // Ambil nilai dari ringkasan Kolom 1
-    const hargaJual_col1 = cleanInput(document.getElementById('summaryHargaJual_col1').textContent);
-    const besarPPN_col1 = cleanInput(document.getElementById('summaryBesarPPN_col1').textContent);
-    const totalPPhDipotong_col1 = cleanInput(document.getElementById('totalPPhDipotong_col1').textContent);
-    const uangDiterima_col1 = cleanInput(document.getElementById('uangDiterima_col1').textContent);
-
-    // Ambil nilai dari ringkasan Kolom 2
-    const hargaJual_col2 = cleanInput(document.getElementById('summaryHargaJual_col2').textContent);
-    const besarPPN_col2 = cleanInput(document.getElementById('summaryBesarPPN_col2').textContent);
-    const totalPPhDipotong_col2 = cleanInput(document.getElementById('totalPPhDipotong_col2').textContent);
-    const uangDiterima_col2 = cleanInput(document.getElementById('uangDiterima_col2').textContent);
-
-    // Hitung selisih
-    const diffHargaJual = hargaJual_col1 - hargaJual_col2;
-    const diffBesarPPN = besarPPN_col1 - besarPPN_col2;
-    const diffTotalPPH = totalPPhDipotong_col1 - totalPPhDipotong_col2;
-    const diffUangDiterima = uangDiterima_col1 - uangDiterima_col2;
-
-    // Update UI Kolom 3
-    document.getElementById('diffHargaJual').textContent = formatRupiah(diffHargaJual);
-    document.getElementById('diffBesarPPN').textContent = formatRupiah(diffBesarPPN);
-    document.getElementById('diffTotalPPH').textContent = formatRupiah(diffTotalPPH);
-    document.getElementById('diffUangDiterima').textContent = formatRupiah(diffUangDiterima);
-}
-
-// =========================================================
-// Event Listeners
-// =========================================================
-document.addEventListener('DOMContentLoaded', () => {
-    // Fungsi untuk attach event listeners ke input/select dalam kolom tertentu
-    function attachColumnListeners(columnSuffix, inputId, calculateFunction) {
-        // Event listener untuk input utama
-        const mainInput = document.getElementById(inputId);
-        if (mainInput) {
-            mainInput.addEventListener('input', () => {
-                calculateFunction();
-                hitungSelisih();
-            });
-        }
-        
-        // Daftar checkbox PPh untuk mutual exclusivity
-        const pphCheckboxes = [
-            document.getElementById(`pph21Applicable_${columnSuffix}`),
-            document.getElementById(`pph23Applicable_${columnSuffix}`),
-            document.getElementById(`pph42Applicable_${columnSuffix}`)
-        ].filter(Boolean); // Filter out any nulls if an ID doesn't exist
-
-        pphCheckboxes.forEach(checkbox => {
-            if (checkbox) {
-                // Set default to unchecked for PPh checkboxes on load (jika diinginkan)
-                // checkbox.checked = false; 
-
-                checkbox.addEventListener('change', function() {
-                    // Jika checkbox PPh ini dicentang, batalkan centang semua checkbox PPh lainnya di kolom yang sama
-                    if (this.checked) {
-                        pphCheckboxes.forEach(otherCheckbox => {
-                            if (otherCheckbox && otherCheckbox !== this) {
-                                otherCheckbox.checked = false;
-                            }
-                        });
-                    }
-                    calculateFunction(); 
-                    hitungSelisih();     
-                });
-            }
-        });
-
-        // Event listener untuk checkbox PPN (tidak termasuk dalam mutual exclusivity PPh)
-        const ppnCheckbox = document.getElementById(`ppnApplicable_${columnSuffix}`);
-        if(ppnCheckbox) {
-            ppnCheckbox.addEventListener('change', () => {
-                calculateFunction();
-                hitungSelisih();
-            });
-        }
-        
-        // Event listeners untuk dropdown/input tarif pajak
-        const tarifInputs = [
-            document.getElementById(`tarifPPN_${columnSuffix}`),
-            document.getElementById(`tarifPPh21_${columnSuffix}`),
-            document.getElementById(`tarifPPh23_${columnSuffix}`), // Ini sekarang input text dengan datalist
-            document.getElementById(`tarifPPh42_${columnSuffix}`)
-        ];
-
-        tarifInputs.forEach(input => {
-            if (input) {
-                // Gunakan 'input' event untuk input text, dan 'change' untuk select
-                input.addEventListener('input', () => { // Gunakan 'input' untuk deteksi ketikan langsung
-                    calculateFunction();
-                    hitungSelisih();
-                });
-                if (input.tagName === 'SELECT') { // Tambahkan 'change' juga untuk select
-                    input.addEventListener('change', () => {
-                        calculateFunction();
-                        hitungSelisih();
-                    });
-                }
-            }
-        });
-
-        // Event listener untuk tombol hitung (jika ada)
-        const hitungButton = document.getElementById(`hitungButton_${columnSuffix}`);
-        if (hitungButton) {
-            hitungButton.addEventListener('click', () => {
-                calculateFunction();
-                hitungSelisih();
-            });
-        }
+window.onload = function() {
+    function updateCalculations() {
+        calculateNet();
+        calculateGross();
     }
 
-    // Attach listeners untuk Kolom 1 (Kalkulator Net)
-    attachColumnListeners('col1', 'uangMasukRekening_col1', hitungPajakKolom1);
-    
-    // Attach listeners untuk Kolom 2 (Kalkulator Gross)
-    attachColumnListeners('col2', 'hargaJual_col2', hitungPajakKolom2);
+    function handlePphCheckboxChange(currentCheckbox) {
+        const pphCheckboxes = [
+            document.getElementById('pph21Terapkan'),
+            document.getElementById('pph23Terapkan'),
+            document.getElementById('pph42Terapkan')
+        ];
+        pphCheckboxes.forEach(cb => {
+            if (cb !== currentCheckbox) {
+                cb.checked = false;
+            }
+            toggleDetails(cb.id);
+        });
+        updateCalculations();
+    }
 
-    // --- Sinkronisasi Checkbox Applicable Antar Kolom ---
-    const checkboxPairs = [
-        { id1: 'ppnApplicable_col1', id2: 'ppnApplicable_col2' },
-        { id1: 'pph21Applicable_col1', id2: 'pph21Applicable_col2' },
-        { id1: 'pph23Applicable_col1', id2: 'pph23Applicable_col2' },
-        { id1: 'pph42Applicable_col1', id2: 'pph42Applicable_col2' }
-    ];
+    $('#tarifPPh21').select2({ data: pph21Data });
+    $('#tarifPPh23').select2({ data: pph23Data });
+    $('#tarifPPh42').select2({ data: pph42Data });
 
-    checkboxPairs.forEach(pair => {
-        const checkbox1 = document.getElementById(pair.id1);
-        const checkbox2 = document.getElementById(pair.id2);
+    $('#tarifPPh21').val(pph21Data[0].id).trigger('change');
+    $('#tarifPPh23').val(pph23Data[0].id).trigger('change');
+    $('#tarifPPh42').val(pph42Data[0].id).trigger('change');
 
-        if (checkbox1 && checkbox2) {
-            const syncCheckboxes = (sourceCheckbox, targetCheckbox) => {
-                targetCheckbox.checked = sourceCheckbox.checked;
-                hitungPajakKolom1();
-                hitungPajakKolom2();
-                hitungSelisih();
-            };
-
-            checkbox1.addEventListener('change', () => syncCheckboxes(checkbox1, checkbox2));
-            checkbox2.addEventListener('change', () => syncCheckboxes(checkbox2, checkbox1));
-        }
+    document.getElementById('uangMasukRekening').addEventListener('input', () => {
+        const uangMasukRekeningValue = document.getElementById('uangMasukRekening').value;
+        document.getElementById('hargaJual').value = uangMasukRekeningValue;
+        updateCalculations();
     });
 
-    // --- Sinkronisasi Input Utama Antar Kolom ---
-    const inputCol1 = document.getElementById('uangMasukRekening_col1'); 
-    const inputCol2 = document.getElementById('hargaJual_col2');       
+    document.getElementById('hargaJual').addEventListener('input', () => {
+        const hargaJualValue = document.getElementById('hargaJual').value;
+        document.getElementById('uangMasukRekening').value = hargaJualValue;
+        updateCalculations();
+    });
 
-    if (inputCol1 && inputCol2) { 
-        const syncInputs = (sourceInput, targetInput) => {
-            const value = sourceInput.value;
-            if (targetInput.value !== value) {
-                targetInput.value = value;
-            }
-            hitungPajakKolom1();
-            hitungPajakKolom2();
-            hitungSelisih();
-        };
+    document.getElementById('ppnTerapkan').addEventListener('change', function() {
+        toggleDetails('ppnTerapkan');
+        updateCalculations();
+    });
 
-        inputCol1.addEventListener('input', () => syncInputs(inputCol1, inputCol2));
-        inputCol2.addEventListener('input', () => syncInputs(inputCol2, inputCol1));
-    }
+    const pphCheckboxes = [
+        document.getElementById('pph21Terapkan'),
+        document.getElementById('pph23Terapkan'),
+        document.getElementById('pph42Terapkan')
+    ];
+    pphCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            handlePphCheckboxChange(this);
+        });
+    });
 
-    // Panggil perhitungan awal saat halaman dimuat
-    hitungPajakKolom1();
-    hitungPajakKolom2();
-    hitungSelisih();
-});
+    document.getElementById('tarifPPN').addEventListener('change', updateCalculations);
+    $('#tarifPPh21').on('change', updateCalculations);
+    $('#tarifPPh23').on('change', updateCalculations);
+    $('#tarifPPh42').on('change', updateCalculations);
+
+    updateCalculations();
+    toggleDetails('ppnTerapkan');
+    handlePphCheckboxChange(null);
+}
