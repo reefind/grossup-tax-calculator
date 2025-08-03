@@ -178,13 +178,14 @@ function cleanInput(value) {
 }
 
 function getPercentageFromValue(value) {
+    const rawValue = parseFloat(value);
     if (value.includes('x 200%')) {
-        return parseFloat(value.replace(/% x 200%$/, '')) * 2;
+        return rawValue * 2;
     }
-    return parseFloat(value.replace(/%$/, '')) || 0;
+    return rawValue || 0;
 }
 
-// **Fungsi baru untuk memformat input angka dengan titik**
+// Fungsi baru untuk memformat input angka dengan titik
 function formatInput(inputElement) {
     let value = inputElement.value.replace(/\./g, '');
     let formattedValue = new Intl.NumberFormat('id-ID').format(value);
@@ -470,9 +471,10 @@ window.onload = function() {
     $('#tarifPPh23').select2({ data: pph23Data });
     $('#tarifPPh42').select2({ data: pph42Data });
 
-    $('#tarifPPh21').val(pph21Data[0].id).trigger('change');
-    $('#tarifPPh23').val(pph23Data[0].id).trigger('change');
-    $('#tarifPPh42').val(pph42Data[0].id).trigger('change');
+    // Set nilai default untuk select2
+    $('#tarifPPh21').val('50').trigger('change');
+    $('#tarifPPh23').val('2% (Jasa Teknik)').trigger('change');
+    $('#tarifPPh42').val('20').trigger('change');
 
     document.getElementById('uangMasukRekening').addEventListener('input', (event) => {
         // Ambil posisi kursor sebelum formatting
@@ -523,6 +525,7 @@ window.onload = function() {
     $('#tarifPPh23').on('change', updateCalculations);
     $('#tarifPPh42').on('change', updateCalculations);
 
+    // Jalankan perhitungan awal saat halaman dimuat
     updateCalculations();
     toggleDetails('ppnTerapkan');
     handlePphCheckboxChange(null);
