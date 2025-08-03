@@ -184,6 +184,13 @@ function getPercentageFromValue(value) {
     return parseFloat(value.replace(/%$/, '')) || 0;
 }
 
+// **Fungsi baru untuk memformat input angka dengan titik**
+function formatInput(inputElement) {
+    let value = inputElement.value.replace(/\./g, '');
+    let formattedValue = new Intl.NumberFormat('id-ID').format(value);
+    inputElement.value = formattedValue;
+}
+
 // =========================================================
 // FUNGSI PENGHITUNGAN TARIF PROGRESIF PPH 21 (PS17)
 // =========================================================
@@ -467,16 +474,32 @@ window.onload = function() {
     $('#tarifPPh23').val(pph23Data[0].id).trigger('change');
     $('#tarifPPh42').val(pph42Data[0].id).trigger('change');
 
-    document.getElementById('uangMasukRekening').addEventListener('input', () => {
-        const uangMasukRekeningValue = document.getElementById('uangMasukRekening').value;
-        document.getElementById('hargaJual').value = uangMasukRekeningValue;
+    document.getElementById('uangMasukRekening').addEventListener('input', (event) => {
+        // Ambil posisi kursor sebelum formatting
+        const cursorPosition = event.target.selectionStart;
+        const previousValue = event.target.value.replace(/\./g, '');
+
+        formatInput(event.target);
         updateCalculations();
+
+        // Sesuaikan posisi kursor setelah formatting
+        const newValue = event.target.value.replace(/\./g, '');
+        const newDots = (newValue.length - previousValue.length);
+        event.target.setSelectionRange(cursorPosition + newDots, cursorPosition + newDots);
     });
 
-    document.getElementById('hargaJual').addEventListener('input', () => {
-        const hargaJualValue = document.getElementById('hargaJual').value;
-        document.getElementById('uangMasukRekening').value = hargaJualValue;
+    document.getElementById('hargaJual').addEventListener('input', (event) => {
+        // Ambil posisi kursor sebelum formatting
+        const cursorPosition = event.target.selectionStart;
+        const previousValue = event.target.value.replace(/\./g, '');
+
+        formatInput(event.target);
         updateCalculations();
+
+        // Sesuaikan posisi kursor setelah formatting
+        const newValue = event.target.value.replace(/\./g, '');
+        const newDots = (newValue.length - previousValue.length);
+        event.target.setSelectionRange(cursorPosition + newDots, cursorPosition + newDots);
     });
 
     document.getElementById('ppnTerapkan').addEventListener('change', function() {
