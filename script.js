@@ -1,7 +1,7 @@
 // =========================================================
 // DATA TARIF PAJAK
 // =========================================================
-const pph21Data = [
+const PPh21Data = [
     { id: '50', text: 'Tenaga Ahli: Pengacara, Akuntan, Arsitek, Dokter, Konsultan, Notaris, PPAT, Penilai, Aktuaris' },
     { id: '50', text: 'Penasihat, Pengajar, Pelatih, Penceramah, Penyuluh, dan Moderator' },
     { id: '50', text: 'Pengarang, Peneliti, Penerjemah' },
@@ -25,7 +25,7 @@ const pph21Data = [
     { id: '50', text: 'Imbalan yang Diterima oleh Olahragawan' }
 ];
 
-const pph23Data = [
+const PPh23Data = [
     { id: '15% (Dividen)', text: '15% - Dividen' },
     { id: '15% (Bunga Selain yang Dikenakan PPh Pasal 4 ayat (2))', text: '15% - Bunga Selain yang Dikenakan PPh Pasal 4 ayat (2)' },
     { id: '15% (Royalti)', text: '15% - Royalti' },
@@ -103,7 +103,7 @@ const pph23Data = [
     { id: '0.00% (Bunga Pinjaman yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap Melalui Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi)', text: '0.00% (Bunga Pinjaman yang Diterima Wajib Pajak Dalam Negeri dan Bentuk Usaha Tetap Melalui Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi' }
 ];
 
-const pph42Data = [
+const PPh42Data = [
     { id: '20', text: '20% - Bunga Tabungan dan Bunga Deposito yang Ditempatkan di Dalam Negeri yang Dananya Bersumber Selain dari Devisa Hasil Ekspor (DHE)' },
     { id: '8', text: '8% - Bunga Deposito yang Ditempatkan di Dalam Negeri (mata uang IDR bersumber dari DHE tenor 1 bulan)' },
     { id: '5', text: '5% - Bunga Deposito yang Ditempatkan di Dalam Negeri (mata uang IDR bersumber dari DHE tenor 3 bulan)' },
@@ -185,7 +185,7 @@ function getPercentageFromValue(value) {
 }
 
 // =========================================================
-// FUNGSI PENGHITUNGAN TARIF PROGRESIF PPH 21 (PS17)
+// FUNGSI PENGHITUNGAN TARIF PROGRESIF PPh 21 (PS17)
 // =========================================================
 function calculatePS17Tax(dpp) {
     if (dpp <= 0) {
@@ -227,16 +227,16 @@ function calculateNet() {
     const tarifPPN_raw = ppnTerapkan ? parseFloat(document.getElementById('tarifPPN').value) : 0;
     const tarifPPN_decimal = tarifPPN_raw / 100;
 
-    const pph21Terapkan = document.getElementById('pph21Terapkan').checked;
-    const pph21_dpp_percentage = pph21Terapkan ? parseFloat(document.getElementById('tarifPPh21').value) : 0;
+    const PPh21Terapkan = document.getElementById('PPh21Terapkan').checked;
+    const PPh21_dpp_percentage = PPh21Terapkan ? parseFloat(document.getElementById('tarifPPh21').value) : 0;
 
-    const pph23Terapkan = document.getElementById('pph23Terapkan').checked;
-    const tarifPPh23_input = pph23Terapkan ? document.getElementById('tarifPPh23').value : "0%";
+    const PPh23Terapkan = document.getElementById('PPh23Terapkan').checked;
+    const tarifPPh23_input = PPh23Terapkan ? document.getElementById('tarifPPh23').value : "0%";
     const tarifPPh23_raw = getPercentageFromValue(tarifPPh23_input);
     const tarifPPh23_decimal = tarifPPh23_raw / 100;
 
-    const pph42Terapkan = document.getElementById('pph42Terapkan').checked;
-    const tarifPPh42_raw = pph42Terapkan ? parseFloat(document.getElementById('tarifPPh42').value) : 0;
+    const PPh42Terapkan = document.getElementById('PPh42Terapkan').checked;
+    const tarifPPh42_raw = PPh42Terapkan ? parseFloat(document.getElementById('tarifPPh42').value) : 0;
     const tarifPPh42_decimal = tarifPPh42_raw / 100;
 
     let hargaJualSebelumPPN = 0;
@@ -276,21 +276,21 @@ function calculateNet() {
 
         besarPPh21 = 0;
         dppPPh21 = 0;
-        if (pph21Terapkan) {
-            dppPPh21 = hargaJualSebelumPPN * (pph21_dpp_percentage / 100);
+        if (PPh21Terapkan) {
+            dppPPh21 = hargaJualSebelumPPN * (PPh21_dpp_percentage / 100);
             besarPPh21 = calculatePS17Tax(dppPPh21);
         }
 
         besarPPh23 = 0;
         dppPPh23 = 0;
-        if (pph23Terapkan) {
+        if (PPh23Terapkan) {
             dppPPh23 = hargaJualSebelumPPN;
             besarPPh23 = dppPPh23 * tarifPPh23_decimal;
         }
 
         besarPPh42 = 0;
         dppPPh42 = 0;
-        if (pph42Terapkan) {
+        if (PPh42Terapkan) {
             dppPPh42 = hargaJualSebelumPPN;
             besarPPh42 = dppPPh42 * tarifPPh42_decimal;
         }
@@ -310,21 +310,21 @@ function calculateNet() {
 
     besarPPh21 = 0;
     dppPPh21 = 0;
-    if (pph21Terapkan) {
-        dppPPh21 = Math.round(hargaJualSebelumPPN * (pph21_dpp_percentage / 100));
+    if (PPh21Terapkan) {
+        dppPPh21 = Math.round(hargaJualSebelumPPN * (PPh21_dpp_percentage / 100));
         besarPPh21 = Math.round(calculatePS17Tax(dppPPh21));
     }
 
     besarPPh23 = 0;
     dppPPh23 = 0;
-    if (pph23Terapkan) {
+    if (PPh23Terapkan) {
         dppPPh23 = hargaJualSebelumPPN;
         besarPPh23 = Math.round(dppPPh23 * tarifPPh23_decimal);
     }
 
     besarPPh42 = 0;
     dppPPh42 = 0;
-    if (pph42Terapkan) {
+    if (PPh42Terapkan) {
         dppPPh42 = hargaJualSebelumPPN;
         besarPPh42 = Math.round(dppPPh42 * tarifPPh42_decimal);
     }
@@ -358,16 +358,16 @@ function calculateGross() {
     const tarifPPN_raw = ppnTerapkan ? parseFloat(document.getElementById('tarifPPN').value) : 0;
     const tarifPPN_decimal = tarifPPN_raw / 100;
 
-    const pph21Terapkan = document.getElementById('pph21Terapkan').checked;
-    const pph21_dpp_percentage = pph21Terapkan ? parseFloat(document.getElementById('tarifPPh21').value) : 0;
+    const PPh21Terapkan = document.getElementById('PPh21Terapkan').checked;
+    const PPh21_dpp_percentage = PPh21Terapkan ? parseFloat(document.getElementById('tarifPPh21').value) : 0;
 
-    const pph23Terapkan = document.getElementById('pph23Terapkan').checked;
-    const tarifPPh23_input = pph23Terapkan ? document.getElementById('tarifPPh23').value : "0%";
+    const PPh23Terapkan = document.getElementById('PPh23Terapkan').checked;
+    const tarifPPh23_input = PPh23Terapkan ? document.getElementById('tarifPPh23').value : "0%";
     const tarifPPh23_raw = getPercentageFromValue(tarifPPh23_input);
     const tarifPPh23_decimal = tarifPPh23_raw / 100;
 
-    const pph42Terapkan = document.getElementById('pph42Terapkan').checked;
-    const tarifPPh42_raw = pph42Terapkan ? parseFloat(document.getElementById('tarifPPh42').value) : 0;
+    const PPh42Terapkan = document.getElementById('PPh42Terapkan').checked;
+    const tarifPPh42_raw = PPh42Terapkan ? parseFloat(document.getElementById('tarifPPh42').value) : 0;
     const tarifPPh42_decimal = tarifPPh42_raw / 100;
 
     let hargaJual = inputHargaJual;
@@ -401,17 +401,17 @@ function calculateGross() {
         besarPPN = hargaJual * tarifPPN_decimal;
     }
 
-    if (pph21Terapkan) {
-        dppPPh21 = hargaJual * (pph21_dpp_percentage / 100);
+    if (PPh21Terapkan) {
+        dppPPh21 = hargaJual * (PPh21_dpp_percentage / 100);
         besarPPh21 = calculatePS17Tax(dppPPh21);
     }
 
-    if (pph23Terapkan) {
+    if (PPh23Terapkan) {
         dppPPh23 = hargaJual;
         besarPPh23 = dppPPh23 * tarifPPh23_decimal;
     }
 
-    if (pph42Terapkan) {
+    if (PPh42Terapkan) {
         dppPPh42 = hargaJual;
         besarPPh42 = dppPPh42 * tarifPPh42_decimal;
     }
@@ -444,13 +444,13 @@ window.onload = function() {
         calculateGross();
     }
 
-    function handlePphCheckboxChange(currentCheckbox) {
-        const pphCheckboxes = [
-            document.getElementById('pph21Terapkan'),
-            document.getElementById('pph23Terapkan'),
-            document.getElementById('pph42Terapkan')
+    function handlePPhCheckboxChange(currentCheckbox) {
+        const PPhCheckboxes = [
+            document.getElementById('PPh21Terapkan'),
+            document.getElementById('PPh23Terapkan'),
+            document.getElementById('PPh42Terapkan')
         ];
-        pphCheckboxes.forEach(cb => {
+        PPhCheckboxes.forEach(cb => {
             if (cb !== currentCheckbox) {
                 cb.checked = false;
             }
@@ -459,13 +459,13 @@ window.onload = function() {
         updateCalculations();
     }
 
-    $('#tarifPPh21').select2({ data: pph21Data });
-    $('#tarifPPh23').select2({ data: pph23Data });
-    $('#tarifPPh42').select2({ data: pph42Data });
+    $('#tarifPPh21').select2({ data: PPh21Data });
+    $('#tarifPPh23').select2({ data: PPh23Data });
+    $('#tarifPPh42').select2({ data: PPh42Data });
 
-    $('#tarifPPh21').val(pph21Data[0].id).trigger('change');
-    $('#tarifPPh23').val(pph23Data[0].id).trigger('change');
-    $('#tarifPPh42').val(pph42Data[0].id).trigger('change');
+    $('#tarifPPh21').val(PPh21Data[0].id).trigger('change');
+    $('#tarifPPh23').val(PPh23Data[0].id).trigger('change');
+    $('#tarifPPh42').val(PPh42Data[0].id).trigger('change');
 
     document.getElementById('uangMasukRekening').addEventListener('input', () => {
         const uangMasukRekeningValue = document.getElementById('uangMasukRekening').value;
@@ -484,14 +484,14 @@ window.onload = function() {
         updateCalculations();
     });
 
-    const pphCheckboxes = [
-        document.getElementById('pph21Terapkan'),
-        document.getElementById('pph23Terapkan'),
-        document.getElementById('pph42Terapkan')
+    const PPhCheckboxes = [
+        document.getElementById('PPh21Terapkan'),
+        document.getElementById('PPh23Terapkan'),
+        document.getElementById('PPh42Terapkan')
     ];
-    pphCheckboxes.forEach(checkbox => {
+    PPhCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
-            handlePphCheckboxChange(this);
+            handlePPhCheckboxChange(this);
         });
     });
 
@@ -502,5 +502,6 @@ window.onload = function() {
 
     updateCalculations();
     toggleDetails('ppnTerapkan');
-    handlePphCheckboxChange(null);
+    handlePPhCheckboxChange(null);
 }
+
