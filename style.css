@@ -255,5 +255,12 @@ h2 {
         min-width: unset;
     }
 
+    .other-link-container {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #666;
 
+}
+    
 }
